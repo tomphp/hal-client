@@ -9,7 +9,7 @@ php:
 before_script:
   - composer self-update
   - composer install --dev --prefer-source
-  - php -S localhost:1000 testapi/index.php &
+  - php -S localhost:1080 testapi/index.php &
   - sleep 3
 
 script:
