@@ -11,6 +11,7 @@ use TomPHP\HalClient\Client;
 use TomPHP\HalClient\Exception\UnknownContentTypeException;
 use TomPHP\HalClient\Exception\HalClientException;
 use TomPHP\HalClient\Processor\HalJsonProcessor;
+use TomPHP\HalClient\HttpClient\GuzzleHttpClient;
 
 /**
  * Defines application features from the specific context.
@@ -36,9 +37,13 @@ class FeatureContext implements Context, SnippetAcceptingContext
      * You can also pass arbitrary arguments to the
      * context constructor through behat.yml.
      */
-    public function __construct()
+    public function __construct($client)
     {
-        $this->httpClient = new DummyHttpClient();
+        if ($client === 'guzzle') {
+            $this->httpClient = new GuzzleHttpClient();
+        } else {
+            $this->httpClient = new DummyHttpClient();
+        }
 
         $this->client = new Client($this->httpClient, [
             new HalJsonProcessor()
