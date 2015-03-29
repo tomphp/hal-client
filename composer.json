@@ -1,8 +1,9 @@
 {
     "name": "tomphp/hal-client",
-    "description": "A client for navigating HAL APIs",
+    "description": "A client library for navigating HAL APIs",
     "license": "MIT",
     "type": "library",
+    "homepage": "https://github.com/tomphp/hal-client",
     "keywords": ["hal", "hypermedia", "hateoas", "client", "rest", "api"],
     "authors": [
         {
@@ -13,6 +14,7 @@
         }
     ],
     "require": {
+        "php": ">=5.4",
         "guzzlehttp/guzzle": "~5.2",
         "phpunit/phpunit": "~4.5",
         "beberlei/assert": "~2.3"
