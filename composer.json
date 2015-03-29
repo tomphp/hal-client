@@ -1,0 +1,29 @@
+{
+    "name": "tomphp/hal-client",
+    "description": "A client for navigating HAL APIs",
+    "license": "MIT",
+    "type": "library",
+    "keywords": ["hal", "hypermedia", "hateoas", "client", "rest", "api"],
+    "authors": [
+        {
+            "name": "Tom Oram",
+            "email": "tom@x2k.co.uk",
+            "homepage": "https://github.com/tomphp",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "~5.2",
+        "phpunit/phpunit": "~4.5",
+        "beberlei/assert": "~2.3"
+    },
+    "require-dev": {
+        "behat/behat": "~3.0",
+        "phpspec/phpspec": "2.*@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "TomPHP\\HalClient\\": "src/"
+        }
+    }
+}

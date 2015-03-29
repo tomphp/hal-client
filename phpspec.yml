@@ -1,0 +1,5 @@
+formatter.name: pretty
+suites:
+    default:
+        namespace: TomPHP\HalClient
+        psr4_prefix: TomPHP\HalClient
