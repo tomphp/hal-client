@@ -6,11 +6,15 @@ use TomPHP\HalClient\Processor;
 use TomPHP\HalClient\Response;
 use TomPHP\HalClient\HttpResponse;
 use TomPHP\HalClient\Response\Link;
+use TomPHP\HalClient\ResponseFetcher;
 
 final class HalJsonProcessor implements Processor
 {
     /** @var array */
     private $data;
+
+    /** @var ResponseFetcher */
+    private $fetcher;
 
     public function getContentType()
     {
@@ -18,9 +22,10 @@ final class HalJsonProcessor implements Processor
     }
 
     /** @return Response */
-    public function process(HttpResponse $httpResponse)
+    public function process(HttpResponse $httpResponse, ResponseFetcher $fetcher)
     {
-        $this->data = json_decode($httpResponse->getBody(), true);
+        $this->fetcher = $fetcher;
+        $this->data    = json_decode($httpResponse->getBody(), true);
 
         return new Response(
             $this->getData(),
@@ -48,9 +53,10 @@ final class HalJsonProcessor implements Processor
 
         foreach ($this->data['_links'] as $name => $params) {
             $links[] = new Link(
+                $this->fetcher,
                 $name,
                 $params['href'],
-                $params['rel']
+                (isset($params['rel']) ? $params['rel'] : null)
             );
         }
 

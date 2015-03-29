@@ -8,5 +8,5 @@ interface Processor
     public function getContentType();
 
     /** @return Response */
-    public function process(HttpResponse $response);
+    public function process(HttpResponse $response, ResponseFetcher $fetcher);
 }

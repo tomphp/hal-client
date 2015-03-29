@@ -39,7 +39,7 @@ class ClientSpec extends ObjectBehavior
 
         $httpClient->get('http://api.test.com/')->willReturn($httpResponse);
 
-        $processor->process($httpResponse)->willReturn($response);
+        $processor->process($httpResponse, $this)->willReturn($response);
 
         $this->get('http://api.test.com/')->shouldReturn($response);
     }

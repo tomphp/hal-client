@@ -5,7 +5,7 @@ namespace TomPHP\HalClient;
 use TomPHP\HalClient\Exception\UnknownContentTypeException;
 use Assert\Assertion;
 
-final class Client
+final class Client implements ResponseFetcher
 {
     /** @var HttpClient */
     private $httpClient;
@@ -25,11 +25,6 @@ final class Client
         }
     }
 
-    /**
-     * @param string $url
-     *
-     * @return Response
-     */
     public function get($url)
     {
         $response = $this->httpClient->get($url);
@@ -42,6 +37,6 @@ final class Client
 
         $processor = $this->processors[$contentType];
 
-        return $processor->process($response);
+        return $processor->process($response, $this);
     }
 }

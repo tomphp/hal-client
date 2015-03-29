@@ -22,3 +22,25 @@ Feature: Get HAL JSON
     When I make a GET request to "/testapi"
     Then the request field "name" should contain "Tom Oram"
     And the request field "twitter" should contain "tomphp"
+
+  Scenario: Following a link
+    Given a GET endpoint "/page1" which returns content type "application/hal+json" and body:
+    """
+    {
+      "_links": {
+        "next": {
+          "href": "/page2"
+        }
+      },
+      "name": "Fred"
+    }
+    """
+    And a GET endpoint "/page2" which returns content type "application/hal+json" and body:
+    """
+    {
+      "name": "Ted"
+    }
+    """
+    When I make a GET request to "/page1"
+    And I make a GET request to link "next" from the response
+    Then the request field "name" should contain "Ted"

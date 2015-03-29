@@ -66,6 +66,14 @@ class FeatureContext implements Context, SnippetAcceptingContext
     }
 
     /**
+     * @When I make a GET request to link :linkName from the response
+     */
+    public function iMakeAGetRequestToLinkFromTheResponse($linkName)
+    {
+        $this->response = $this->response->$linkName->get();
+    }
+
+    /**
      * @Then I should get a bad content type error
      */
     public function iShouldGetABadContentTypeError()
