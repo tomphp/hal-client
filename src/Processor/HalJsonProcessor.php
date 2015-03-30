@@ -7,6 +7,7 @@ use TomPHP\HalClient\Response;
 use TomPHP\HalClient\HttpResponse;
 use TomPHP\HalClient\Response\Link;
 use TomPHP\HalClient\ResponseFetcher;
+use TomPHP\HalClient\Response\Field;
 
 final class HalJsonProcessor implements Processor
 {
@@ -28,18 +29,25 @@ final class HalJsonProcessor implements Processor
         $this->data    = json_decode($httpResponse->getBody(), true);
 
         return new Response(
-            $this->getData(),
+            $this->getFields(),
             $this->getLinks()
         );
     }
 
-    public function getData()
+    /** @return Field[] */
+    private function getFields()
     {
-        $data = $this->data;
+        $fields = [];
 
-        unset($data['_links']);
+        foreach ($this->data as $name => $value) {
+            if ($name === '_links') {
+                continue;
+            }
 
-        return $data;
+            $fields[] = new Field($name, $value);
+        }
+
+        return $fields;
     }
 
     /** @return Link[] */

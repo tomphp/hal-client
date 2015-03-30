@@ -91,6 +91,6 @@ class FeatureContext implements Context, SnippetAcceptingContext
      */
     public function theRequestFieldShouldContain($field, $value)
     {
-        Assert::assertEquals($value, $this->response->$field);
+        Assert::assertEquals($value, $this->response->$field->value());
     }
 }

@@ -6,27 +6,31 @@ use Assert\Assertion;
 use TomPHP\HalClient\Response\Link;
 use TomPHP\HalClient\Exception\FieldNotFoundException;
 use TomPHP\HalClient\Exception\LinkNotFoundException;
+use TomPHP\HalClient\Response\Field;
 
 final class Response
 {
     /** @var array */
-    private $fields;
+    private $fields = [];
 
     /** @var Link[] */
     private $links = [];
 
     /**
-     * @param mixed[] $fields
+     * @param Field[] $fields
      * @param Link[]  $links
      */
     public function __construct(array $fields, array $links = [])
     {
+        Assertion::allIsInstanceOf($fields, Field::class);
         Assertion::allIsInstanceOf($links, Link::class);
 
-        $this->fields = $fields;
+        foreach ($fields as $field) {
+            $this->fields[$field->name()] = $field;
+        }
 
         foreach ($links as $link) {
-            $this->links[$link->getName()] = $link;
+            $this->links[$link->name()] = $link;
         }
     }
 

@@ -41,7 +41,7 @@ class HalJsonProcessorSpec extends ObjectBehavior
     {
         $response = $this->process($this->httpResponse, $fetcher);
 
-        $response->field('field1')->shouldReturn('value1');
+        $response->field('field1')->value()->shouldReturn('value1');
     }
 
     function it_processes_links(ResponseFetcher $fetcher)

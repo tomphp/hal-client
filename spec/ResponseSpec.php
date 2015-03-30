@@ -8,28 +8,34 @@ use TomPHP\HalClient\Response\Link;
 use TomPHP\HalClient\Exception\FieldNotFoundException;
 use TomPHP\HalClient\Exception\LinkNotFoundException;
 use TomPHP\HalClient\ResponseFetcher;
+use TomPHP\HalClient\Response\Field;
 
 class ResponseSpec extends ObjectBehavior
 {
+    /** @var Field */
+    private $field;
+
     /** @var Link */
     private $link;
 
     function let(ResponseFetcher $fetcher) {
-        $this->link = new Link($fetcher->getWrappedObject(), 'link1', 'href');
+        $this->field = new Field('field1', 'value1');
+        $this->link  = new Link($fetcher->getWrappedObject(), 'link1', 'href');
+
         $this->beConstructedWith(
-            ['field1' => 'value1'],
+            [$this->field],
             [$this->link]
         );
     }
 
     function it_returns_fields_by_name()
     {
-        $this->field('field1')->shouldReturn('value1');
+        $this->field('field1')->shouldBeLike($this->field);
     }
 
     function it_returns_fields_by_magic_method()
     {
-        $this->__get('field1')->shouldReturn('value1');
+        $this->__get('field1')->shouldReturn($this->field);
     }
 
     function it_throws_when_requesting_an_unknown_field()
