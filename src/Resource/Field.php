@@ -2,28 +2,17 @@
 
 namespace TomPHP\HalClient\Resource;
 
-final class Field
+final class Field implements FieldNode
 {
-    /** @var string */
-    private $name;
-
     /** @var string */
     private $value;
 
     /**
-     * @param string $name
      * @param string $value
      */
-    public function __construct($name, $value)
+    public function __construct($value)
     {
-        $this->name  = $name;
         $this->value = $value;
-    }
-
-    /** @return string */
-    public function name()
-    {
-        return $this->name;
     }
 
     /** @return string */

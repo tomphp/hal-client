@@ -8,6 +8,7 @@ use TomPHP\HalClient\HttpResponse;
 use TomPHP\HalClient\Resource\Link;
 use TomPHP\HalClient\ResourceFetcher;
 use TomPHP\HalClient\Resource\Field;
+use TomPHP\HalClient\Resource\FieldMap;
 
 final class HalJsonProcessor implements Processor
 {
@@ -26,7 +27,7 @@ final class HalJsonProcessor implements Processor
     public function process(HttpResponse $httpResource, ResourceFetcher $fetcher)
     {
         $this->fetcher = $fetcher;
-        $this->data    = json_decode($httpResource->getBody(), true);
+        $this->data    = json_decode($httpResource->getBody());
 
         return new Resource(
             $this->getFields(),
@@ -45,7 +46,11 @@ final class HalJsonProcessor implements Processor
                 continue;
             }
 
-            $fields[] = new Field($name, $value);
+            if (is_object($value)) {
+                $fields[$name] = FieldMap::fromObject($value);
+            } else {
+                $fields[$name] = new Field($value);
+            }
         }
 
         return $fields;
@@ -54,18 +59,17 @@ final class HalJsonProcessor implements Processor
     /** @return Link[] */
     private function getLinks()
     {
-        if (!array_key_exists('_links', $this->data)) {
+        if (!isset($this->data->_links)) {
             return [];
         }
 
         $links = [];
 
-        foreach ($this->data['_links'] as $name => $params) {
-            $links[] = new Link(
+        foreach ($this->data->_links as $name => $params) {
+            $links[$name] = new Link(
                 $this->fetcher,
-                $name,
-                $params['href'],
-                (isset($params['rel']) ? $params['rel'] : null)
+                $params->href,
+                isset($params->rel) ?: null
             );
         }
 
@@ -75,7 +79,7 @@ final class HalJsonProcessor implements Processor
     /** @return Resource[] */
     private function getResources()
     {
-        if (!array_key_exists('_embedded', $this->data)) {
+        if (!isset($this->data->_embedded)) {
             return [];
         }
 
@@ -83,7 +87,7 @@ final class HalJsonProcessor implements Processor
 
         $processor = new self();
 
-        foreach ($this->data['_embedded'] as $name => $params) {
+        foreach ($this->data->_embedded as $name => $params) {
             $resources[$name] = $processor->process(
                 new HttpResponse($this->getContentType(), json_encode($params)),
                 $this->fetcher

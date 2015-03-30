@@ -24,13 +24,13 @@ class ResourceSpec extends ObjectBehavior
     private $resource;
 
     function let(ResourceFetcher $fetcher) {
-        $this->field    = new Field('field1', 'value1');
-        $this->link     = new Link($fetcher->getWrappedObject(), 'link1', 'href');
+        $this->field    = new Field('value1');
+        $this->link     = new Link($fetcher->getWrappedObject(), 'href');
         $this->resource = new Resource([]);
 
         $this->beConstructedWith(
-            [$this->field],
-            [$this->link],
+            ['field1' => $this->field],
+            ['link1' => $this->link],
             ['resource1' => $this->resource]
         );
     }

@@ -9,6 +9,7 @@ use TomPHP\HalClient\Exception\LinkNotFoundException;
 use TomPHP\HalClient\Resource\Field;
 use TomPHP\HalClient\Resource;
 use TomPHP\HalClient\Exception\ResourceNotFoundException;
+use TomPHP\HalClient\Resource\FieldNode;
 
 final class Resource
 {
@@ -22,24 +23,18 @@ final class Resource
     private $resources = [];
 
     /**
-     * @param Field[]    $fields
-     * @param Link[]     $links
-     * @param Resource[] $resources
+     * @param FieldNode[] $fields
+     * @param Link[]      $links
+     * @param Resource[]  $resources
      */
     public function __construct(array $fields, array $links = [], array $resources = [])
     {
-        Assertion::allIsInstanceOf($fields, Field::class);
+        Assertion::allIsInstanceOf($fields, FieldNode::class);
         Assertion::allIsInstanceOf($links, Link::class);
         Assertion::allIsInstanceOf($resources, Resource::class);
 
-        foreach ($fields as $field) {
-            $this->fields[$field->name()] = $field;
-        }
-
-        foreach ($links as $link) {
-            $this->links[$link->name()] = $link;
-        }
-
+        $this->fields    = $fields;
+        $this->links     = $links;
         $this->resources = $resources;
     }
 

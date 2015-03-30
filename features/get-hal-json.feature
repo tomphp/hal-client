@@ -23,6 +23,18 @@ Feature: Get HAL JSON
     Then the response field "name" should contain "Tom Oram"
     And the response field "twitter" should contain "tomphp"
 
+  Scenario: A field is a map
+    Given a GET endpoint "/testapi" which returns content type "application/hal+json" and body:
+    """
+    {
+      "social": {
+        "twitter": "tomphp"
+       }
+    }
+    """
+    When I make a GET request to "/testapi"
+    Then the field "twitter" in response fields "social" should contain "tomphp"
+
   Scenario: Following a link
     Given a GET endpoint "/page1" which returns content type "application/hal+json" and body:
     """

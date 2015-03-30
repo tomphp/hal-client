@@ -11,7 +11,7 @@ class LinkSpec extends ObjectBehavior
 {
     function let(ResourceFetcher $fetcher)
     {
-        $this->beConstructedWith($fetcher, 'test_name', 'test_href');
+        $this->beConstructedWith($fetcher, 'test_href');
     }
 
     function it_makes_a_request_to_the_link(ResourceFetcher $fetcher)

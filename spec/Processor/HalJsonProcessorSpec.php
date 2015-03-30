@@ -28,6 +28,9 @@ class HalJsonProcessorSpec extends ObjectBehavior
                     }
                 },
                 "field1": "value1",
+                "map": {
+                    "mapfield": "mapvalue"
+                },
                 "_embedded": {
                     "resource1": {
                         "subfield": "subvalue"
@@ -46,7 +49,14 @@ class HalJsonProcessorSpec extends ObjectBehavior
     {
         $resource = $this->process($this->httpResource, $fetcher);
 
-        $resource->field('field1')->value()->shouldReturn('value1');
+        $resource->field1->value()->shouldReturn('value1');
+    }
+
+    function it_processes_fields_which_are_maps(ResourceFetcher $fetcher)
+    {
+        $resource = $this->process($this->httpResource, $fetcher);
+
+        $resource->map->mapfield->value()->shouldReturn('mapvalue');
     }
 
     function it_processes_links(ResourceFetcher $fetcher)

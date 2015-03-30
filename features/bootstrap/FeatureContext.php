@@ -1,17 +1,17 @@
 <?php
 
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use PHPUnit_Framework_Assert as Assert;
-use TomPHP\HalClient\HttpClient\DummyHttpClient;
 use TomPHP\HalClient\Client;
-use TomPHP\HalClient\Exception\UnknownContentTypeException;
 use TomPHP\HalClient\Exception\HalClientException;
-use TomPHP\HalClient\Processor\HalJsonProcessor;
+use TomPHP\HalClient\Exception\UnknownContentTypeException;
+use TomPHP\HalClient\HttpClient\DummyHttpClient;
 use TomPHP\HalClient\HttpClient\GuzzleHttpClient;
+use TomPHP\HalClient\Processor\HalJsonProcessor;
 
 /**
  * Defines application features from the specific context.
@@ -96,10 +96,12 @@ class FeatureContext implements Context, SnippetAcceptingContext
 
 
     /**
-     * @Then the response field :field in embedded resource :resource should contain :value
+     * @Then the response field :level2 in embedded resource :level1 should contain :value
+     * @Then the field :level2 in response fields :level1 should contain :value
      */
-    public function theResponseFieldInEmbeddedResourceShouldContain($field, $resource, $value)
+    public function theResponseFieldInEmbeddedResourceShouldContain($level1, $level2, $value)
     {
-        Assert::assertEquals($value, $this->response->$resource->$field->value());
+        Assert::assertEquals($value, $this->response->$level1->$level2->value());
     }
+
 }
