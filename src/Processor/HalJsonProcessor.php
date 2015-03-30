@@ -30,7 +30,8 @@ final class HalJsonProcessor implements Processor
 
         return new Response(
             $this->getFields(),
-            $this->getLinks()
+            $this->getLinks(),
+            $this->getResources()
         );
     }
 
@@ -40,7 +41,7 @@ final class HalJsonProcessor implements Processor
         $fields = [];
 
         foreach ($this->data as $name => $value) {
-            if ($name === '_links') {
+            if ($name === '_links' || $name === '_embedded') {
                 continue;
             }
 
@@ -69,5 +70,26 @@ final class HalJsonProcessor implements Processor
         }
 
         return $links;
+    }
+
+    /** @return Resource[] */
+    private function getResources()
+    {
+        if (!array_key_exists('_embedded', $this->data)) {
+            return [];
+        }
+
+        $resources = [];
+
+        $processor = new self();
+
+        foreach ($this->data['_embedded'] as $name => $params) {
+            $resources[$name] = $processor->process(
+                new HttpResponse($this->getContentType(), json_encode($params)),
+                $this->fetcher
+            );
+        }
+
+        return $resources;
     }
 }

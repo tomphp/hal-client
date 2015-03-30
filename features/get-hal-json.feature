@@ -20,8 +20,8 @@ Feature: Get HAL JSON
     }
     """
     When I make a GET request to "/testapi"
-    Then the request field "name" should contain "Tom Oram"
-    And the request field "twitter" should contain "tomphp"
+    Then the response field "name" should contain "Tom Oram"
+    And the response field "twitter" should contain "tomphp"
 
   Scenario: Following a link
     Given a GET endpoint "/page1" which returns content type "application/hal+json" and body:
@@ -43,4 +43,19 @@ Feature: Get HAL JSON
     """
     When I make a GET request to "/page1"
     And I make a GET request to link "next" from the response
-    Then the request field "name" should contain "Ted"
+    Then the response field "name" should contain "Ted"
+
+  Scenario: Embedded resource
+    Given a GET endpoint "/testapi" which returns content type "application/hal+json" and body:
+    """
+    {
+      "_embedded": {
+        "image": {
+          "name": "thing.jpg"
+        }
+      },
+      "name": "Fred"
+    }
+    """
+    When I make a GET request to "/testapi"
+    Then the response field "name" in embedded resource "image" should contain "thing.jpg"

@@ -27,7 +27,12 @@ class HalJsonProcessorSpec extends ObjectBehavior
                         "href": "http://www.somewhere.com/other"
                     }
                 },
-                "field1": "value1"
+                "field1": "value1",
+                "_embedded": {
+                    "resource1": {
+                        "subfield": "subvalue"
+                    }
+                }
             }'
         );
     }
@@ -51,11 +56,26 @@ class HalJsonProcessorSpec extends ObjectBehavior
         $response->links()->shouldReturn(['self', 'other']);
     }
 
-    function it_does_no_add_links_as_a_field(ResponseFetcher $fetcher)
+    function it_does_not_add_links_as_a_field(ResponseFetcher $fetcher)
     {
         $response = $this->process($this->httpResponse, $fetcher);
 
         $response->shouldThrow(new FieldNotFoundException('_links'))
                  ->duringField('_links');
+    }
+
+    function it_does_not_add_embedded_as_a_field(ResponseFetcher $fetcher)
+    {
+        $response = $this->process($this->httpResponse, $fetcher);
+
+        $response->shouldThrow(new FieldNotFoundException('_embedded'))
+                 ->duringField('_embedded');
+    }
+
+    function it_processes_resources(ResponseFetcher $fetcher)
+    {
+        $response = $this->process($this->httpResponse, $fetcher);
+
+        $response->resource1->subfield->value()->shouldReturn('subvalue');
     }
 }

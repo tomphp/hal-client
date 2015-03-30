@@ -7,6 +7,8 @@ use TomPHP\HalClient\Response\Link;
 use TomPHP\HalClient\Exception\FieldNotFoundException;
 use TomPHP\HalClient\Exception\LinkNotFoundException;
 use TomPHP\HalClient\Response\Field;
+use TomPHP\HalClient\Response;
+use TomPHP\HalClient\Exception\ResourceNotFoundException;
 
 final class Response
 {
@@ -16,14 +18,19 @@ final class Response
     /** @var Link[] */
     private $links = [];
 
+    /** @var Response[] */
+    private $resources = [];
+
     /**
-     * @param Field[] $fields
-     * @param Link[]  $links
+     * @param Field[]    $fields
+     * @param Link[]     $links
+     * @param Response[] $resources
      */
-    public function __construct(array $fields, array $links = [])
+    public function __construct(array $fields, array $links = [], array $resources = [])
     {
         Assertion::allIsInstanceOf($fields, Field::class);
         Assertion::allIsInstanceOf($links, Link::class);
+        Assertion::allIsInstanceOf($resources, Response::class);
 
         foreach ($fields as $field) {
             $this->fields[$field->name()] = $field;
@@ -32,6 +39,8 @@ final class Response
         foreach ($links as $link) {
             $this->links[$link->name()] = $link;
         }
+
+        $this->resources = $resources;
     }
 
     /**
@@ -43,6 +52,10 @@ final class Response
     {
         if (array_key_exists($name, $this->fields)) {
             return $this->field($name);
+        }
+
+        if (array_key_exists($name, $this->resources)) {
+            return $this->resource($name);
         }
 
         return $this->link($name);
@@ -70,7 +83,11 @@ final class Response
         return array_keys($this->links);
     }
 
-    /** @return Link */
+    /**
+     * @return Link
+     *
+     * @throws LinkNotFoundException
+     */
     public function link($name)
     {
         if (!array_key_exists($name, $this->links)) {
@@ -78,5 +95,17 @@ final class Response
         }
 
         return $this->links[$name];
+    }
+
+    /**
+     * @return Resource
+     */
+    public function resource($name)
+    {
+        if (!array_key_exists($name, $this->resources)) {
+            throw new ResourceNotFoundException($name);
+        }
+
+        return $this->resources[$name];
     }
 }
