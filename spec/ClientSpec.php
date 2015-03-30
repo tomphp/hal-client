@@ -8,7 +8,7 @@ use TomPHP\HalClient\HttpClient;
 use TomPHP\HalClient\HttpResponse;
 use TomPHP\HalClient\Exception\UnknownContentTypeException;
 use TomPHP\HalClient\Processor;
-use TomPHP\HalClient\Response;
+use TomPHP\HalClient\Resource;
 
 class ClientSpec extends ObjectBehavior
 {
@@ -32,14 +32,14 @@ class ClientSpec extends ObjectBehavior
         )->duringGet('http://api.test.com/');
     }
 
-    function it_returns_a_processed_response(HttpClient $httpClient, Processor $processor)
+    function it_returns_a_processed_resource(HttpClient $httpClient, Processor $processor)
     {
-        $httpResponse = new HttpResponse('application/hal+json', '');
-        $response = new Response([], []);
+        $httpResource = new HttpResponse('application/hal+json', '');
+        $response = new Resource([], []);
 
-        $httpClient->get('http://api.test.com/')->willReturn($httpResponse);
+        $httpClient->get('http://api.test.com/')->willReturn($httpResource);
 
-        $processor->process($httpResponse, $this)->willReturn($response);
+        $processor->process($httpResource, $this)->willReturn($response);
 
         $this->get('http://api.test.com/')->shouldReturn($response);
     }

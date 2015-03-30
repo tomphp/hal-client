@@ -3,18 +3,18 @@
 namespace TomPHP\HalClient\Processor;
 
 use TomPHP\HalClient\Processor;
-use TomPHP\HalClient\Response;
+use TomPHP\HalClient\Resource;
 use TomPHP\HalClient\HttpResponse;
-use TomPHP\HalClient\Response\Link;
-use TomPHP\HalClient\ResponseFetcher;
-use TomPHP\HalClient\Response\Field;
+use TomPHP\HalClient\Resource\Link;
+use TomPHP\HalClient\ResourceFetcher;
+use TomPHP\HalClient\Resource\Field;
 
 final class HalJsonProcessor implements Processor
 {
     /** @var array */
     private $data;
 
-    /** @var ResponseFetcher */
+    /** @var ResourceFetcher */
     private $fetcher;
 
     public function getContentType()
@@ -22,13 +22,13 @@ final class HalJsonProcessor implements Processor
         return 'application/hal+json';
     }
 
-    /** @return Response */
-    public function process(HttpResponse $httpResponse, ResponseFetcher $fetcher)
+    /** @return Resource */
+    public function process(HttpResponse $httpResource, ResourceFetcher $fetcher)
     {
         $this->fetcher = $fetcher;
-        $this->data    = json_decode($httpResponse->getBody(), true);
+        $this->data    = json_decode($httpResource->getBody(), true);
 
-        return new Response(
+        return new Resource(
             $this->getFields(),
             $this->getLinks(),
             $this->getResources()

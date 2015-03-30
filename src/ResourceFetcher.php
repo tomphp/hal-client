@@ -2,12 +2,12 @@
 
 namespace TomPHP\HalClient;
 
-interface ResponseFetcher
+interface ResourceFetcher
 {
     /**
      * @param string $url
      *
-     * @return Response
+     * @return Resource
      */
     public function get($url);
 }

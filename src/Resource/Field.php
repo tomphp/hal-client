@@ -1,6 +1,6 @@
 <?php
 
-namespace TomPHP\HalClient\Response;
+namespace TomPHP\HalClient\Resource;
 
 final class Field
 {

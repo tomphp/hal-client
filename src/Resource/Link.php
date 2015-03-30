@@ -1,12 +1,12 @@
 <?php
 
-namespace TomPHP\HalClient\Response;
+namespace TomPHP\HalClient\Resource;
 
-use TomPHP\HalClient\ResponseFetcher;
+use TomPHP\HalClient\ResourceFetcher;
 
 final class Link
 {
-    /** @var ResponseFetcher */
+    /** @var ResourceFetcher */
     private $fetcher;
 
     /** @var string */
@@ -19,7 +19,7 @@ final class Link
      * @param string $name
      * @param string $href
      */
-    public function __construct(ResponseFetcher $fetcher, $name, $href)
+    public function __construct(ResourceFetcher $fetcher, $name, $href)
     {
         $this->fetcher = $fetcher;
         $this->name    = $name;
@@ -32,7 +32,7 @@ final class Link
         return $this->name;
     }
 
-    /** @return Response */
+    /** @return Resource */
     public function get()
     {
         return $this->fetcher->get($this->href);

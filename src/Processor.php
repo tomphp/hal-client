@@ -7,6 +7,6 @@ interface Processor
     /** @return string */
     public function getContentType();
 
-    /** @return Response */
-    public function process(HttpResponse $response, ResponseFetcher $fetcher);
+    /** @return Resource */
+    public function process(HttpResponse $response, ResourceFetcher $fetcher);
 }

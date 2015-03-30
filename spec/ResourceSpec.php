@@ -4,15 +4,15 @@ namespace spec\TomPHP\HalClient;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use TomPHP\HalClient\Response\Link;
+use TomPHP\HalClient\Resource\Link;
 use TomPHP\HalClient\Exception\FieldNotFoundException;
 use TomPHP\HalClient\Exception\LinkNotFoundException;
-use TomPHP\HalClient\ResponseFetcher;
-use TomPHP\HalClient\Response\Field;
-use TomPHP\HalClient\Response;
+use TomPHP\HalClient\ResourceFetcher;
+use TomPHP\HalClient\Resource\Field;
+use TomPHP\HalClient\Resource;
 use TomPHP\HalClient\Exception\ResourceNotFoundException;
 
-class ResponseSpec extends ObjectBehavior
+class ResourceSpec extends ObjectBehavior
 {
     /** @var Field */
     private $field;
@@ -20,18 +20,18 @@ class ResponseSpec extends ObjectBehavior
     /** @var Link */
     private $link;
 
-    /** @var Response */
-    private $response;
+    /** @var Resource */
+    private $resource;
 
-    function let(ResponseFetcher $fetcher) {
+    function let(ResourceFetcher $fetcher) {
         $this->field    = new Field('field1', 'value1');
         $this->link     = new Link($fetcher->getWrappedObject(), 'link1', 'href');
-        $this->response = new Response([]);
+        $this->resource = new Resource([]);
 
         $this->beConstructedWith(
             [$this->field],
             [$this->link],
-            ['resource1' => $this->response]
+            ['resource1' => $this->resource]
         );
     }
 
@@ -74,7 +74,7 @@ class ResponseSpec extends ObjectBehavior
 
     function it_gets_resource_by_name()
     {
-        $this->resource('resource1')->shouldReturn($this->response);
+        $this->resource('resource1')->shouldReturn($this->resource);
     }
 
     function it_throws_when_requesting_an_unknown_resource()
@@ -85,6 +85,6 @@ class ResponseSpec extends ObjectBehavior
 
     function it_gets_resource_by_magic_method()
     {
-        $this->resource1->shouldBeLike($this->response);
+        $this->resource1->shouldBeLike($this->resource);
     }
 }

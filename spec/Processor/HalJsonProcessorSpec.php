@@ -6,16 +6,16 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use TomPHP\HalClient\HttpResponse;
 use TomPHP\HalClient\Exception\FieldNotFoundException;
-use TomPHP\HalClient\ResponseFetcher;
+use TomPHP\HalClient\ResourceFetcher;
 
 class HalJsonProcessorSpec extends ObjectBehavior
 {
     /** @var HttpResponse */
-    private $httpResponse;
+    private $httpResource;
 
     function let()
     {
-        $this->httpResponse = new HttpResponse(
+        $this->httpResource = new HttpResponse(
             'application/hal+json',
             '{
                 "_links": {
@@ -42,40 +42,40 @@ class HalJsonProcessorSpec extends ObjectBehavior
         $this->getContentType()->shouldReturn('application/hal+json');
     }
 
-    function it_processes_simple_single_fields(ResponseFetcher $fetcher)
+    function it_processes_simple_single_fields(ResourceFetcher $fetcher)
     {
-        $response = $this->process($this->httpResponse, $fetcher);
+        $resource = $this->process($this->httpResource, $fetcher);
 
-        $response->field('field1')->value()->shouldReturn('value1');
+        $resource->field('field1')->value()->shouldReturn('value1');
     }
 
-    function it_processes_links(ResponseFetcher $fetcher)
+    function it_processes_links(ResourceFetcher $fetcher)
     {
-        $response = $this->process($this->httpResponse, $fetcher);
+        $resource = $this->process($this->httpResource, $fetcher);
 
-        $response->links()->shouldReturn(['self', 'other']);
+        $resource->links()->shouldReturn(['self', 'other']);
     }
 
-    function it_does_not_add_links_as_a_field(ResponseFetcher $fetcher)
+    function it_does_not_add_links_as_a_field(ResourceFetcher $fetcher)
     {
-        $response = $this->process($this->httpResponse, $fetcher);
+        $resource = $this->process($this->httpResource, $fetcher);
 
-        $response->shouldThrow(new FieldNotFoundException('_links'))
+        $resource->shouldThrow(new FieldNotFoundException('_links'))
                  ->duringField('_links');
     }
 
-    function it_does_not_add_embedded_as_a_field(ResponseFetcher $fetcher)
+    function it_does_not_add_embedded_as_a_field(ResourceFetcher $fetcher)
     {
-        $response = $this->process($this->httpResponse, $fetcher);
+        $resource = $this->process($this->httpResource, $fetcher);
 
-        $response->shouldThrow(new FieldNotFoundException('_embedded'))
+        $resource->shouldThrow(new FieldNotFoundException('_embedded'))
                  ->duringField('_embedded');
     }
 
-    function it_processes_resources(ResponseFetcher $fetcher)
+    function it_processes_resources(ResourceFetcher $fetcher)
     {
-        $response = $this->process($this->httpResponse, $fetcher);
+        $resource = $this->process($this->httpResource, $fetcher);
 
-        $response->resource1->subfield->value()->shouldReturn('subvalue');
+        $resource->resource1->subfield->value()->shouldReturn('subvalue');
     }
 }
