@@ -85,3 +85,18 @@ Feature: Get HAL JSON
     """
     When I make a GET request to "/testapi"
     Then the response field "name" in embedded resource "image" should contain "thing.jpg"
+
+  Scenario: Embedded resource collection
+    Given a GET endpoint "/testapi" which returns content type "application/hal+json" and body:
+    """
+    {
+      "_embedded": {
+        "images": [{
+          "name": "thing.jpg"
+        }]
+      },
+      "name": "Fred"
+    }
+    """
+    When I make a GET request to "/testapi"
+    Then the field "name" at index 0 in response field "images" should contain "thing.jpg"

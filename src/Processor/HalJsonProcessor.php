@@ -2,6 +2,7 @@
 
 namespace TomPHP\HalClient\Processor;
 
+use stdClass;
 use TomPHP\HalClient\Processor;
 use TomPHP\HalClient\Resource;
 use TomPHP\HalClient\Resource\Link;
@@ -11,6 +12,7 @@ use TomPHP\HalClient\Resource\FieldMap;
 use Psr\Http\Message\ResponseInterface;
 use Phly\Http\Stream;
 use TomPHP\HalClient\Resource\FieldNodeFactory;
+use TomPHP\HalClient\Resource\ResourceCollection;
 
 final class HalJsonProcessor implements Processor
 {
@@ -89,16 +91,32 @@ final class HalJsonProcessor implements Processor
 
         $resources = [];
 
-        $processor = new self();
-
         foreach ($this->data->_embedded as $name => $params) {
-            $resources[$name] = $processor->process(
-                $this->response->withBody($this->createStream(json_encode($params))),
-                $this->fetcher
-            );
+            if (is_array($params)) {
+                $resources[$name] = new ResourceCollection(array_map(
+                    function ($params) {
+                        return $this->createResourceFromObject($params);
+                    },
+                    $params
+                ));
+                continue;
+            }
+
+            $resources[$name] = $this->createResourceFromObject($params);
         }
 
         return $resources;
+    }
+
+    /** @return Resource */
+    private function createResourceFromObject(stdClass $object)
+    {
+        $processor = new self();
+
+        return $processor->process(
+            $this->response->withBody($this->createStream(json_encode($object))),
+            $this->fetcher
+        );
     }
 
     /** @return Stream */

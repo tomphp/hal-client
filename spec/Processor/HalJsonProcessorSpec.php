@@ -36,7 +36,10 @@ class HalJsonProcessorSpec extends ObjectBehavior
                 "_embedded": {
                     "resource1": {
                         "subfield": "subvalue"
-                    }
+                    },
+                    "resourcecollection": [
+                        {"name": "collectionvalue"}
+                    ]
                 }
             }',
             'r'
@@ -99,5 +102,12 @@ class HalJsonProcessorSpec extends ObjectBehavior
         $resource = $this->process($this->response, $fetcher);
 
         $resource->resource1->subfield->getValue()->shouldReturn('subvalue');
+    }
+
+    function it_processes_resources_collections(ResourceFetcher $fetcher)
+    {
+        $resource = $this->process($this->response, $fetcher);
+
+        $resource->resourcecollection[0]->name->getValue()->shouldReturn('collectionvalue');
     }
 }
