@@ -17,6 +17,11 @@ script:
   - vendor/bin/phpspec r
   - vendor/bin/behat
 
+branches:
+  only:
+    - master
+    - develop
+
 matrix:
     fast_finish: true
     allow_failures:
