@@ -8,6 +8,8 @@ use TomPHP\HalClient\Exception\FieldNotFoundException;
 
 final class FieldMap implements FieldNode
 {
+    use FieldNodeFactory;
+
     /** @var FieldNode[] */
     private $fields;
 
@@ -17,11 +19,7 @@ final class FieldMap implements FieldNode
         $fields = [];
 
         foreach ($object as $property => $value) {
-            if (is_object($value)) {
-                $fields[$property] = self::fromObject($value);
-            } else {
-                $fields[$property] = new Field($value);
-            }
+            $fields[$property] = self::createFieldNode($value);
         }
 
         return new self($fields);

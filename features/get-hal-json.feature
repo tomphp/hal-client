@@ -33,7 +33,21 @@ Feature: Get HAL JSON
     }
     """
     When I make a GET request to "/testapi"
-    Then the field "twitter" in response fields "social" should contain "tomphp"
+    Then the field "twitter" in response field "social" should contain "tomphp"
+
+  Scenario: A field is a list
+    Given a GET endpoint "/testapi" which returns content type "application/hal+json" and body:
+    """
+    {
+      "social": [
+        {"name": "Facebook"},
+        {"name": "Twitter"}
+       ]
+    }
+    """
+    When I make a GET request to "/testapi"
+    Then the field "name" at index 0 in response field "social" should contain "Facebook"
+    And the field "name" at index 1 in response field "social" should contain "Twitter"
 
   Scenario: Following a link
     Given a GET endpoint "/page1" which returns content type "application/hal+json" and body:

@@ -97,11 +97,18 @@ class FeatureContext implements Context, SnippetAcceptingContext
 
     /**
      * @Then the response field :level2 in embedded resource :level1 should contain :value
-     * @Then the field :level2 in response fields :level1 should contain :value
+     * @Then the field :level2 in response field :level1 should contain :value
      */
     public function theResponseFieldInEmbeddedResourceShouldContain($level1, $level2, $value)
     {
         Assert::assertEquals($value, $this->response->$level1->$level2->value());
     }
 
+    /**
+     * @Then the field :level2 at index :index in response field :level1 should contain :value
+     */
+    public function theFieldAtIndexInResponseFieldShouldContain($level2, $level1, $value, $index)
+    {
+        Assert::assertEquals($value, $this->response->{$level1}[$index]->$level2->value());
+    }
 }
