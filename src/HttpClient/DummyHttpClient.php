@@ -23,7 +23,7 @@ final class DummyHttpClient implements HttpClient
     public function createEndpoint($method, $url, $contentType, $body)
     {
         $this->endpoints[$method][$url] = new Response(
-            fopen("data://text/plain,$body", 'r'),
+            "data://text/plain,$body",
             200,
             ['content-type' => $contentType]
         );

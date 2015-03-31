@@ -56,7 +56,7 @@ final class GuzzleHttpClient implements HttpClient
         $response = $client->get('http://localhost:1080' . $url);
 
         return new Response(
-            fopen('data://text/plain,' . (string) $response->getBody(), 'r'),
+            'data://text/plain,' . (string) $response->getBody(),
             $response->getStatusCode(),
             $response->getHeaders()
         );

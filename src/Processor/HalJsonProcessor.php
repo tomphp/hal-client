@@ -104,6 +104,6 @@ final class HalJsonProcessor implements Processor
     /** @return Stream */
     private function createStream($data)
     {
-        return new Stream(fopen("data://text/plain,$data", 'r'));
+        return new Stream("data://text/plain,$data");
     }
 }
