@@ -22,13 +22,13 @@ class FieldMapSpec extends ObjectBehavior
 
     function it_returns_field_via_field_method()
     {
-        $this->field('fieldname')->shouldReturn($this->field);
+        $this->getField('fieldname')->shouldReturn($this->field);
     }
 
     function it_throws_if_field_is_not_found()
     {
         $this->shouldThrow(new FieldNotFoundException('unknown-field'))
-             ->duringField('unknown-field');
+             ->duringGetField('unknown-field');
     }
 
     function it_returns_field_via_magic_method()
@@ -43,7 +43,7 @@ class FieldMapSpec extends ObjectBehavior
 
         $this->beConstructedThrough('fromObject', [$obj]);
 
-        $this->myfield->value()->shouldReturn('test value');
+        $this->myfield->getValue()->shouldReturn('test value');
     }
 
     function it_creates_field_map_from_object()
@@ -54,6 +54,6 @@ class FieldMapSpec extends ObjectBehavior
 
         $this->beConstructedThrough('fromObject', [$obj]);
 
-        $this->mymap->myfield->value()->shouldReturn('test value');
+        $this->mymap->myfield->getValue()->shouldReturn('test value');
     }
 }

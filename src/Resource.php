@@ -46,14 +46,14 @@ final class Resource
     public function __get($name)
     {
         if (array_key_exists($name, $this->fields)) {
-            return $this->field($name);
+            return $this->getField($name);
         }
 
         if (array_key_exists($name, $this->resources)) {
-            return $this->resource($name);
+            return $this->getResource($name);
         }
 
-        return $this->link($name);
+        return $this->getLink($name);
     }
 
     /**
@@ -63,7 +63,7 @@ final class Resource
      *
      * @throws FieldNotFoundException
      */
-    public function field($name)
+    public function getField($name)
     {
         if (!array_key_exists($name, $this->fields)) {
             throw new FieldNotFoundException($name);
@@ -73,7 +73,7 @@ final class Resource
     }
 
     /** @return string[] */
-    public function links()
+    public function getLinks()
     {
         return array_keys($this->links);
     }
@@ -83,7 +83,7 @@ final class Resource
      *
      * @throws LinkNotFoundException
      */
-    public function link($name)
+    public function getLink($name)
     {
         if (!array_key_exists($name, $this->links)) {
             throw new LinkNotFoundException($name);
@@ -95,7 +95,7 @@ final class Resource
     /**
      * @return Resource
      */
-    public function resource($name)
+    public function getResource($name)
     {
         if (!array_key_exists($name, $this->resources)) {
             throw new ResourceNotFoundException($name);

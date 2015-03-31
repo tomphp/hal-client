@@ -38,7 +38,7 @@ final class FieldMap implements FieldNode
      */
     public function __get($name)
     {
-        return $this->field($name);
+        return $this->getField($name);
     }
 
     /**
@@ -48,7 +48,7 @@ final class FieldMap implements FieldNode
      *
      * @throws FieldNotFoundException
      */
-    public function field($name)
+    public function getField($name)
     {
         if (!array_key_exists($name, $this->fields)) {
             throw new FieldNotFoundException($name);

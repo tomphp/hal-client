@@ -54,28 +54,28 @@ class HalJsonProcessorSpec extends ObjectBehavior
     {
         $resource = $this->process($this->response, $fetcher);
 
-        $resource->field1->value()->shouldReturn('value1');
+        $resource->field1->getValue()->shouldReturn('value1');
     }
 
     function it_processes_fields_which_are_maps(ResourceFetcher $fetcher)
     {
         $resource = $this->process($this->response, $fetcher);
 
-        $resource->map->mapfield->value()->shouldReturn('mapvalue');
+        $resource->map->mapfield->getValue()->shouldReturn('mapvalue');
     }
 
     function it_processes_fields_which_are_collections(ResourceFetcher $fetcher)
     {
         $resource = $this->process($this->response, $fetcher);
 
-        $resource->collection[0]->name->value()->shouldReturn('item1');
+        $resource->collection[0]->name->getValue()->shouldReturn('item1');
     }
 
     function it_processes_links(ResourceFetcher $fetcher)
     {
         $resource = $this->process($this->response, $fetcher);
 
-        $resource->links()->shouldReturn(['self', 'other']);
+        $resource->getLinks()->shouldReturn(['self', 'other']);
     }
 
     function it_does_not_add_links_as_a_field(ResourceFetcher $fetcher)
@@ -83,7 +83,7 @@ class HalJsonProcessorSpec extends ObjectBehavior
         $resource = $this->process($this->response, $fetcher);
 
         $resource->shouldThrow(new FieldNotFoundException('_links'))
-                 ->duringField('_links');
+                 ->duringGetField('_links');
     }
 
     function it_does_not_add_embedded_as_a_field(ResourceFetcher $fetcher)
@@ -91,13 +91,13 @@ class HalJsonProcessorSpec extends ObjectBehavior
         $resource = $this->process($this->response, $fetcher);
 
         $resource->shouldThrow(new FieldNotFoundException('_embedded'))
-                 ->duringField('_embedded');
+                 ->duringGetField('_embedded');
     }
 
     function it_processes_resources(ResourceFetcher $fetcher)
     {
         $resource = $this->process($this->response, $fetcher);
 
-        $resource->resource1->subfield->value()->shouldReturn('subvalue');
+        $resource->resource1->subfield->getValue()->shouldReturn('subvalue');
     }
 }

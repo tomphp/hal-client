@@ -37,7 +37,7 @@ class ResourceSpec extends ObjectBehavior
 
     function it_returns_fields_by_name()
     {
-        $this->field('field1')->shouldBeLike($this->field);
+        $this->getField('field1')->shouldBeLike($this->field);
     }
 
     function it_returns_fields_by_magic_method()
@@ -48,17 +48,17 @@ class ResourceSpec extends ObjectBehavior
     function it_throws_when_requesting_an_unknown_field()
     {
         $this->shouldThrow(new FieldNotFoundException('unknown'))
-             ->duringField('unknown');
+             ->duringGetField('unknown');
     }
 
     function it_lists_links()
     {
-        $this->links()->shouldReturn(['link1']);
+        $this->getLinks()->shouldReturn(['link1']);
     }
 
     function it_gets_link_by_name()
     {
-        $this->link('link1')->shouldBeLike($this->link);
+        $this->getLink('link1')->shouldBeLike($this->link);
     }
 
     function it_gets_link_by_magic_method()
@@ -69,18 +69,18 @@ class ResourceSpec extends ObjectBehavior
     function it_throws_when_requesting_an_unknown_link()
     {
         $this->shouldThrow(new LinkNotFoundException('unknown'))
-             ->duringLink('unknown');
+             ->duringGetLink('unknown');
     }
 
     function it_gets_resource_by_name()
     {
-        $this->resource('resource1')->shouldReturn($this->resource);
+        $this->getResource('resource1')->shouldReturn($this->resource);
     }
 
     function it_throws_when_requesting_an_unknown_resource()
     {
         $this->shouldThrow(new ResourceNotFoundException('unknown'))
-             ->duringResource('unknown');
+             ->duringGetResource('unknown');
     }
 
     function it_gets_resource_by_magic_method()

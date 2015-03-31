@@ -43,6 +43,6 @@ class FieldCollectionSpec extends ObjectBehavior
 
         $this->beConstructedThrough('fromArray', [$values]);
 
-        $this[0]->field1->value()->shouldBe('value1');
+        $this[0]->field1->getValue()->shouldBe('value1');
     }
 }

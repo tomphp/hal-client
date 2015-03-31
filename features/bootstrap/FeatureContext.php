@@ -91,7 +91,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
      */
     public function theResponseFieldShouldContain($field, $value)
     {
-        Assert::assertEquals($value, $this->response->$field->value());
+        Assert::assertEquals($value, $this->response->$field->getValue());
     }
 
 
@@ -101,7 +101,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
      */
     public function theResponseFieldInEmbeddedResourceShouldContain($level1, $level2, $value)
     {
-        Assert::assertEquals($value, $this->response->$level1->$level2->value());
+        Assert::assertEquals($value, $this->response->$level1->$level2->getValue());
     }
 
     /**
@@ -109,6 +109,6 @@ class FeatureContext implements Context, SnippetAcceptingContext
      */
     public function theFieldAtIndexInResponseFieldShouldContain($level2, $level1, $value, $index)
     {
-        Assert::assertEquals($value, $this->response->{$level1}[$index]->$level2->value());
+        Assert::assertEquals($value, $this->response->{$level1}[$index]->$level2->getValue());
     }
 }

@@ -16,7 +16,7 @@ final class Field implements FieldNode
     }
 
     /** @return string */
-    public function value()
+    public function getValue()
     {
         return $this->value;
     }
