@@ -10,9 +10,12 @@ use TomPHP\HalClient\Resource\Field;
 use TomPHP\HalClient\Resource\FieldMap;
 use Psr\Http\Message\ResponseInterface;
 use Phly\Http\Stream;
+use TomPHP\HalClient\Resource\FieldNodeFactory;
 
 final class HalJsonProcessor implements Processor
 {
+    use FieldNodeFactory;
+
     /** @var ResponseInterface */
     private $response;
 
@@ -51,11 +54,7 @@ final class HalJsonProcessor implements Processor
                 continue;
             }
 
-            if (is_object($value)) {
-                $fields[$name] = FieldMap::fromObject($value);
-            } else {
-                $fields[$name] = new Field($value);
-            }
+            $fields[$name] = self::createFieldNode($value);
         }
 
         return $fields;
