@@ -29,7 +29,7 @@ final class Client implements ResourceFetcher
     {
         $response = $this->httpClient->get($url);
 
-        $contentType = $response->getContentType();
+        $contentType = $response->getHeader('content-type');
 
         if (!array_key_exists($contentType, $this->processors)) {
             throw new UnknownContentTypeException($contentType);

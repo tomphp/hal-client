@@ -4,14 +4,18 @@ namespace TomPHP\HalClient\Processor;
 
 use TomPHP\HalClient\Processor;
 use TomPHP\HalClient\Resource;
-use TomPHP\HalClient\HttpResponse;
 use TomPHP\HalClient\Resource\Link;
 use TomPHP\HalClient\ResourceFetcher;
 use TomPHP\HalClient\Resource\Field;
 use TomPHP\HalClient\Resource\FieldMap;
+use Psr\Http\Message\ResponseInterface;
+use Phly\Http\Stream;
 
 final class HalJsonProcessor implements Processor
 {
+    /** @var ResponseInterface */
+    private $response;
+
     /** @var array */
     private $data;
 
@@ -24,10 +28,11 @@ final class HalJsonProcessor implements Processor
     }
 
     /** @return Resource */
-    public function process(HttpResponse $httpResource, ResourceFetcher $fetcher)
+    public function process(ResponseInterface $response, ResourceFetcher $fetcher)
     {
-        $this->fetcher = $fetcher;
-        $this->data    = json_decode($httpResource->getBody());
+        $this->response = $response;
+        $this->fetcher  = $fetcher;
+        $this->data     = json_decode($response->getBody());
 
         return new Resource(
             $this->getFields(),
@@ -69,7 +74,7 @@ final class HalJsonProcessor implements Processor
             $links[$name] = new Link(
                 $this->fetcher,
                 $params->href,
-                isset($params->rel) ?: null
+                isset($params->rel) ? $params->rel : null
             );
         }
 
@@ -89,11 +94,17 @@ final class HalJsonProcessor implements Processor
 
         foreach ($this->data->_embedded as $name => $params) {
             $resources[$name] = $processor->process(
-                new HttpResponse($this->getContentType(), json_encode($params)),
+                $this->response->withBody($this->createStream(json_encode($params))),
                 $this->fetcher
             );
         }
 
         return $resources;
+    }
+
+    /** @return Stream */
+    private function createStream($data)
+    {
+        return new Stream(fopen("data://text/plain,$data", 'r'));
     }
 }

@@ -3,7 +3,7 @@
 namespace TomPHP\HalClient\HttpClient;
 
 use TomPHP\HalClient\HttpClient;
-use TomPHP\HalClient\HttpResponse;
+use Phly\Http\Response;
 
 final class DummyHttpClient implements HttpClient
 {
@@ -22,7 +22,11 @@ final class DummyHttpClient implements HttpClient
      */
     public function createEndpoint($method, $url, $contentType, $body)
     {
-        $this->endpoints[$method][$url] = new HttpResponse($contentType, $body);
+        $this->endpoints[$method][$url] = new Response(
+            fopen("data://text/plain,$body", 'r'),
+            200,
+            ['content-type' => $contentType]
+        );
     }
 
     public function get($url)

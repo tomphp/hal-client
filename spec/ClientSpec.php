@@ -4,11 +4,11 @@ namespace spec\TomPHP\HalClient;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use TomPHP\HalClient\HttpClient;
-use TomPHP\HalClient\HttpResponse;
 use TomPHP\HalClient\Exception\UnknownContentTypeException;
 use TomPHP\HalClient\Processor;
 use TomPHP\HalClient\Resource;
+use Psr\Http\Message\ResponseInterface;
+use TomPHP\HalClient\HttpClient;
 
 class ClientSpec extends ObjectBehavior
 {
@@ -22,25 +22,25 @@ class ClientSpec extends ObjectBehavior
         ]);
     }
 
-    function it_throw_if_content_type_is_unknown(HttpClient $httpClient)
+    function it_throw_if_content_type_is_unknown(HttpClient $httpClient, ResponseInterface $response)
     {
-        $httpClient->get('http://api.test.com/')
-            ->willReturn(new HttpResponse('application/unknown-type', ''));
+        $response->getHeader('content-type')->willReturn('application/unknown-type');
+        $httpClient->get('http://api.test.com/')->willReturn($response);
 
         $this->shouldThrow(
             new UnknownContentTypeException('application/unknown-type')
         )->duringGet('http://api.test.com/');
     }
 
-    function it_returns_a_processed_resource(HttpClient $httpClient, Processor $processor)
+    function it_returns_a_processed_resource(ResponseInterface $response, HttpClient $httpClient, Processor $processor)
     {
-        $httpResource = new HttpResponse('application/hal+json', '');
-        $response = new Resource([], []);
+        $response->getHeader('content-type')->willReturn('application/hal+json');
+        $resource = new Resource([], []);
 
-        $httpClient->get('http://api.test.com/')->willReturn($httpResource);
+        $httpClient->get('http://api.test.com/')->willReturn($response);
 
-        $processor->process($httpResource, $this)->willReturn($response);
+        $processor->process($response, $this)->willReturn($resource);
 
-        $this->get('http://api.test.com/')->shouldReturn($response);
+        $this->get('http://api.test.com/')->shouldReturn($resource);
     }
 }

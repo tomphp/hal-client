@@ -19,7 +19,7 @@ class DummyHttpClientSpec extends ObjectBehavior
 
         $response = $this->get('http://api.test.com/');
 
-        $response->getContentType()->shouldReturn('application/hal+xml');
-        $response->getBody()->shouldReturn('{"name":"value"}');
+        $response->getHeader('content-type')->shouldReturn('application/hal+xml');
+        $response->getBody()->__toString()->shouldReturn('{"name":"value"}');
     }
 }

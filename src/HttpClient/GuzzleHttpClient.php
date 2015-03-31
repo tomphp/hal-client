@@ -4,7 +4,7 @@ namespace TomPHP\HalClient\HttpClient;
 
 use TomPHP\HalClient\HttpClient;
 use GuzzleHttp\Client;
-use TomPHP\HalClient\HttpResponse;
+use Phly\Http\Response;
 
 final class GuzzleHttpClient implements HttpClient
 {
@@ -55,9 +55,10 @@ final class GuzzleHttpClient implements HttpClient
 
         $response = $client->get('http://localhost:1080' . $url);
 
-        return new HttpResponse(
-            $response->getHeader('content-type'),
-            (string) $response->getBody()
+        return new Response(
+            fopen('data://text/plain,' . (string) $response->getBody(), 'r'),
+            $response->getStatusCode(),
+            $response->getHeaders()
         );
     }
 }
