@@ -13,6 +13,12 @@ final class Client implements ResourceFetcher
     /** @var Processor[] */
     private $processors;
 
+    /** @return self */
+    public static function create()
+    {
+        return new self(new GuzzleHttpClient(), [new HalJsonProcessor()]);
+    }
+
     /** @param Processor[] $processors */
     public function __construct(HttpClient $httpClient, array $processors)
     {
