@@ -6,7 +6,7 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use TomPHP\HalClient\Exception\UnknownContentTypeException;
 use TomPHP\HalClient\Processor;
-use TomPHP\HalClient\Resource;
+use TomPHP\HalClient\Resource\Resource;
 use Psr\Http\Message\ResponseInterface;
 use TomPHP\HalClient\HttpClient;
 

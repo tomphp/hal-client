@@ -5,7 +5,7 @@ namespace TomPHP\HalClient\Processor;
 use Phly\Http\Stream;
 use Psr\Http\Message\ResponseInterface;
 use TomPHP\HalClient\Processor;
-use TomPHP\HalClient\Resource;
+use TomPHP\HalClient\Resource\Resource;
 use TomPHP\HalClient\ResourceFetcher;
 use TomPHP\HalClient\Resource\Field;
 use TomPHP\HalClient\Resource\FieldMap;

@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\TomPHP\HalClient;
+namespace spec\TomPHP\HalClient\Resource;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -9,7 +9,7 @@ use TomPHP\HalClient\Exception\FieldNotFoundException;
 use TomPHP\HalClient\Exception\LinkNotFoundException;
 use TomPHP\HalClient\ResourceFetcher;
 use TomPHP\HalClient\Resource\Field;
-use TomPHP\HalClient\Resource;
+use TomPHP\HalClient\Resource\Resource;
 use TomPHP\HalClient\Exception\ResourceNotFoundException;
 
 class ResourceSpec extends ObjectBehavior

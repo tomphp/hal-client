@@ -1,6 +1,6 @@
 <?php
 
-namespace TomPHP\HalClient;
+namespace TomPHP\HalClient\Resource;
 
 use Assert\Assertion;
 use TomPHP\HalClient\Exception\FieldNotFoundException;
