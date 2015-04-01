@@ -11,3 +11,5 @@ default:
             contexts:
                 - FeatureContext:
                     client: "guzzle"
+            filters:
+                tags: "~@no-guzzle"

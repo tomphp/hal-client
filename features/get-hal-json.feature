@@ -49,6 +49,7 @@ Feature: Get HAL JSON
     Then the field "name" at index 0 in response field "social" should contain "Facebook"
     And the field "name" at index 1 in response field "social" should contain "Twitter"
 
+  @no-guzzle
   Scenario: Following a link
     Given a GET endpoint "/page1" which returns content type "application/hal+json" and body:
     """

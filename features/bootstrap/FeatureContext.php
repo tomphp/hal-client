@@ -34,6 +34,9 @@ class FeatureContext implements Context, SnippetAcceptingContext
     /** @var Node */
     private $result;
 
+    /** @var string */
+    private $urlPrefix = '';
+
     /**
      * Initializes context.
      *
@@ -45,6 +48,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
     {
         if ($client === 'guzzle') {
             $this->httpClient = new GuzzleHttpClient();
+            $this->urlPrefix = 'http://localhost:1080';
         } else {
             $this->httpClient = new DummyHttpClient();
         }
@@ -68,7 +72,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
     public function iMakeAGetRequestTo($url)
     {
         try {
-            $this->response = $this->client->get($url);
+            $this->response = $this->client->get($this->urlPrefix . $url);
         } catch (HalClientException $error) {
             $this->error = $error;
         }
