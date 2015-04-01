@@ -2,8 +2,10 @@
 
 namespace TomPHP\HalClient;
 
-use TomPHP\HalClient\Exception\UnknownContentTypeException;
 use Assert\Assertion;
+use TomPHP\HalClient\Exception\UnknownContentTypeException;
+use TomPHP\HalClient\HttpClient\GuzzleHttpClient;
+use TomPHP\HalClient\Processor\HalJsonProcessor;
 
 final class Client implements ResourceFetcher
 {
