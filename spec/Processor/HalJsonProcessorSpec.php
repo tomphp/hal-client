@@ -7,6 +7,7 @@ use Prophecy\Argument;
 use TomPHP\HalClient\Exception\FieldNotFoundException;
 use TomPHP\HalClient\ResourceFetcher;
 use Phly\Http\Response;
+use TomPHP\HalClient\Exception\ProcessingException;
 
 class HalJsonProcessorSpec extends ObjectBehavior
 {
@@ -15,35 +16,32 @@ class HalJsonProcessorSpec extends ObjectBehavior
 
     function let()
     {
-        $body = fopen(
-            'data://text/plain,{
-                "_links": {
-                    "self": {
-                        "href": "http://www.somewhere.com/",
-                        "rel": "self"
-                    },
-                    "other": {
-                        "href": "http://www.somewhere.com/other"
-                    }
+        $body = 'data://text/plain,{
+            "_links": {
+                "self": {
+                    "href": "http://www.somewhere.com/",
+                    "rel": "self"
                 },
-                "field1": "value1",
-                "map": {
-                    "mapfield": "mapvalue"
-                },
-                "collection": [
-                    {"name": "item1"}
-                ],
-                "_embedded": {
-                    "resource1": {
-                        "subfield": "subvalue"
-                    },
-                    "resourcecollection": [
-                        {"name": "collectionvalue"}
-                    ]
+                "other": {
+                    "href": "http://www.somewhere.com/other"
                 }
-            }',
-            'r'
-        );
+            },
+            "field1": "value1",
+            "map": {
+                "mapfield": "mapvalue"
+            },
+            "collection": [
+                {"name": "item1"}
+            ],
+            "_embedded": {
+                "resource1": {
+                    "subfield": "subvalue"
+                },
+                "resourcecollection": [
+                    {"name": "collectionvalue"}
+                ]
+            }
+        }';
 
         $this->response = new Response($body, 200, ['content-type' => 'application/hal+json']);
     }
@@ -51,6 +49,18 @@ class HalJsonProcessorSpec extends ObjectBehavior
     function it_returns_the_hal_plus_json_content_type()
     {
         $this->getContentType()->shouldReturn('application/hal+json');
+    }
+
+    function it_throws_for_bad_json_error(ResourceFetcher $fetcher)
+    {
+        $json = '{bad, josn}';
+        json_decode($json);
+        $error = json_last_error_msg();
+
+        $response = new Response("data://text/plain,$json", 200, ['content-type' => 'application/hal+json']);
+
+        $this->shouldThrow(ProcessingException::badJson($error))
+             ->duringProcess($response, $fetcher);
     }
 
     function it_processes_simple_single_fields(ResourceFetcher $fetcher)

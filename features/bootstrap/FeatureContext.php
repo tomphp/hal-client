@@ -12,6 +12,7 @@ use TomPHP\HalClient\Exception\UnknownContentTypeException;
 use TomPHP\HalClient\HttpClient\DummyHttpClient;
 use TomPHP\HalClient\HttpClient\GuzzleHttpClient;
 use TomPHP\HalClient\Processor\HalJsonProcessor;
+use TomPHP\HalClient\Resource\Node;
 
 /**
  * Defines application features from the specific context.
@@ -29,6 +30,9 @@ class FeatureContext implements Context, SnippetAcceptingContext
 
     /** @var HalClientException */
     private $error;
+
+    /** @var Node */
+    private $result;
 
     /**
      * Initializes context.
@@ -110,5 +114,25 @@ class FeatureContext implements Context, SnippetAcceptingContext
     public function theFieldAtIndexInResponseFieldShouldContain($level2, $level1, $value, $index)
     {
         Assert::assertEquals($value, $this->response->{$level1}[$index]->$level2->getValue());
+    }
+
+    /**
+     * @Then I should find :count field with :fieldName matching :fieldValue in the :collection collection
+     */
+    public function iShouldFindFieldWithMatchingInTheCollection($fieldName, $fieldValue, $collection, $count)
+    {
+        $result = $this->response->$collection->findMatching([$fieldName => $fieldValue]);
+
+        Assert::assertCount((int) $count, $result);
+
+        $this->result = $result[0];
+    }
+
+    /**
+     * @Then the field should have :name :value
+     */
+    public function theFieldShouldHave($name, $value)
+    {
+        Assert::assertEquals($value, $this->result->$name->getValue());
     }
 }

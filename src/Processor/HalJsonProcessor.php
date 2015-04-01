@@ -14,6 +14,7 @@ use TomPHP\HalClient\Resource\Link;
 use TomPHP\HalClient\Resource\NodeCollection;
 use TomPHP\HalClient\Resource\ResourceCollection;
 use stdClass;
+use TomPHP\HalClient\Exception\ProcessingException;
 
 final class HalJsonProcessor implements Processor
 {
@@ -37,6 +38,10 @@ final class HalJsonProcessor implements Processor
         $this->response = $response;
         $this->fetcher  = $fetcher;
         $this->data     = json_decode($response->getBody());
+
+        if ($this->data === null) {
+            throw ProcessingException::badJson(json_last_error_msg());
+        }
 
         return new Resource(
             $this->getFields(),

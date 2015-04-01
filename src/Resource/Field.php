@@ -20,4 +20,9 @@ final class Field extends Node
     {
         return $this->value;
     }
+
+    public function matches($criteria)
+    {
+        return $this->value == $criteria;
+    }
 }

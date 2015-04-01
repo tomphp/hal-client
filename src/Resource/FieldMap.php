@@ -42,4 +42,20 @@ final class FieldMap extends Node
 
         return $this->fields[$name];
     }
+
+    public function matches($criteria)
+    {
+        $result = true;
+
+        foreach ($criteria as $name => $value) {
+            if (!array_key_exists($name, $this->fields)) {
+                $result = false;
+                break;
+            }
+
+            $result = $result && $this->fields[$name]->matches($value);
+        }
+
+        return $result;
+    }
 }

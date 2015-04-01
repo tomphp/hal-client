@@ -100,3 +100,18 @@ Feature: Get HAL JSON
     """
     When I make a GET request to "/testapi"
     Then the field "name" at index 0 in response field "images" should contain "thing.jpg"
+
+  Scenario: Search a collection
+    Given a GET endpoint "/testapi" which returns content type "application/hal+json" and body:
+    """
+    {
+      "items": [
+        {"name": "ball", "colour": "red"},
+        {"name": "rabbit", "colour": "grey"},
+        {"name": "shoe", "colour": "brown"}
+      ]
+    }
+    """
+    When I make a GET request to "/testapi"
+    Then I should find 1 field with "name" matching "rabbit" in the "items" collection
+    And the field should have "colour" "grey"
