@@ -1,12 +1,12 @@
 default:
     suites:
-        dummy-client:
+        dummy_client:
             paths: [ %paths.base%/features ]
             contexts:
                 - FeatureContext:
                     client: "dummy"
 
-        guzzle-client:
+        guzzle_client:
             paths: [ %paths.base%/features ]
             contexts:
                 - FeatureContext:

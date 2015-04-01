@@ -2,7 +2,7 @@
 
 namespace TomPHP\HalClient\Resource;
 
-final class Field implements FieldNode
+final class Field extends Node
 {
     /** @var string */
     private $value;

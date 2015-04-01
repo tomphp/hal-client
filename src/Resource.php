@@ -3,15 +3,14 @@
 namespace TomPHP\HalClient;
 
 use Assert\Assertion;
-use TomPHP\HalClient\Resource\Link;
 use TomPHP\HalClient\Exception\FieldNotFoundException;
 use TomPHP\HalClient\Exception\LinkNotFoundException;
-use TomPHP\HalClient\Resource\Field;
-use TomPHP\HalClient\Resource\ResourceNode;
 use TomPHP\HalClient\Exception\ResourceNotFoundException;
-use TomPHP\HalClient\Resource\FieldNode;
+use TomPHP\HalClient\Resource\Field;
+use TomPHP\HalClient\Resource\Link;
+use TomPHP\HalClient\Resource\Node;
 
-final class Resource implements ResourceNode
+final class Resource extends Node
 {
     /** @var array */
     private $fields = [];
@@ -23,15 +22,15 @@ final class Resource implements ResourceNode
     private $resources = [];
 
     /**
-     * @param FieldNode[]     $fields
-     * @param Link[]          $links
-     * @param ResourceNode[]  $resources
+     * @param Node[] $fields
+     * @param Link[] $links
+     * @param Node[] $resources
      */
     public function __construct(array $fields, array $links = [], array $resources = [])
     {
-        Assertion::allIsInstanceOf($fields, FieldNode::class);
+        Assertion::allIsInstanceOf($fields, Node::class);
         Assertion::allIsInstanceOf($links, Link::class);
-        Assertion::allIsInstanceOf($resources, ResourceNode::class);
+        Assertion::allIsInstanceOf($resources, Node::class);
 
         $this->fields    = $fields;
         $this->links     = $links;

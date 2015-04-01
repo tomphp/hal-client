@@ -2,22 +2,21 @@
 
 namespace TomPHP\HalClient\Processor;
 
-use stdClass;
+use Phly\Http\Stream;
+use Psr\Http\Message\ResponseInterface;
 use TomPHP\HalClient\Processor;
 use TomPHP\HalClient\Resource;
-use TomPHP\HalClient\Resource\Link;
 use TomPHP\HalClient\ResourceFetcher;
 use TomPHP\HalClient\Resource\Field;
 use TomPHP\HalClient\Resource\FieldMap;
-use Psr\Http\Message\ResponseInterface;
-use Phly\Http\Stream;
 use TomPHP\HalClient\Resource\FieldNodeFactory;
+use TomPHP\HalClient\Resource\Link;
+use TomPHP\HalClient\Resource\NodeCollection;
 use TomPHP\HalClient\Resource\ResourceCollection;
+use stdClass;
 
 final class HalJsonProcessor implements Processor
 {
-    use FieldNodeFactory;
-
     /** @var ResponseInterface */
     private $response;
 
@@ -93,7 +92,7 @@ final class HalJsonProcessor implements Processor
 
         foreach ($this->data->_embedded as $name => $params) {
             if (is_array($params)) {
-                $resources[$name] = new ResourceCollection(array_map(
+                $resources[$name] = new NodeCollection(array_map(
                     function ($params) {
                         return $this->createResourceFromObject($params);
                     },
@@ -123,5 +122,47 @@ final class HalJsonProcessor implements Processor
     private function createStream($data)
     {
         return new Stream("data://text/plain,$data");
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return FileNode
+     */
+    private function createFieldNode($value)
+    {
+        if (is_object($value)) {
+            return $this->createFieldMapFromObject($value);
+        }
+
+        if (is_array($value)) {
+            return $this->fromArray($value);
+        }
+
+        return new Field($value);
+    }
+
+    /** @return FieldMap */
+    private function createFieldMapFromObject(stdClass $object)
+    {
+        $fields = [];
+
+        foreach ($object as $property => $value) {
+            $fields[$property] = $this->createFieldNode($value);
+        }
+
+        return new FieldMap($fields);
+    }
+
+    /**
+     * @param mixed[] $values
+     *
+     * @return NodeCollection
+     */
+    public function fromArray(array $values)
+    {
+        return new NodeCollection(array_map(function ($field) {
+            return $this->createFieldNode($field);
+        }, $values));
     }
 }

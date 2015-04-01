@@ -2,6 +2,6 @@
 
 namespace TomPHP\HalClient\Resource;
 
-interface ResourceNode
+abstract class Node
 {
 }

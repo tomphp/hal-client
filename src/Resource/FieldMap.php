@@ -3,29 +3,15 @@
 namespace TomPHP\HalClient\Resource;
 
 use stdClass;
-use TomPHP\HalClient\Resource\FieldNode;
+use TomPHP\HalClient\Resource\Node;
 use TomPHP\HalClient\Exception\FieldNotFoundException;
 
-final class FieldMap implements FieldNode
+final class FieldMap extends Node
 {
-    use FieldNodeFactory;
-
-    /** @var FieldNode[] */
+    /** @var Node[] */
     private $fields;
 
-    /** @return self */
-    public static function fromObject(stdClass $object)
-    {
-        $fields = [];
-
-        foreach ($object as $property => $value) {
-            $fields[$property] = self::createFieldNode($value);
-        }
-
-        return new self($fields);
-    }
-
-    /** @param FieldNode[] $fields */
+    /** @param Node[] $fields */
     public function __construct(array $fields)
     {
         $this->fields = $fields;
@@ -34,7 +20,7 @@ final class FieldMap implements FieldNode
     /**
      * @param string $name
      *
-     * @return FieldNode
+     * @return Node
      */
     public function __get($name)
     {

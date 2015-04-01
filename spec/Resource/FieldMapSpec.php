@@ -35,25 +35,4 @@ class FieldMapSpec extends ObjectBehavior
     {
         $this->fieldname->shouldReturn($this->field);
     }
-
-    function it_creates_fields_from_object()
-    {
-        $obj = new stdClass();
-        $obj->myfield = 'test value';
-
-        $this->beConstructedThrough('fromObject', [$obj]);
-
-        $this->myfield->getValue()->shouldReturn('test value');
-    }
-
-    function it_creates_field_map_from_object()
-    {
-        $obj = new stdClass();
-        $obj->mymap = new stdClass();
-        $obj->mymap->myfield = 'test value';
-
-        $this->beConstructedThrough('fromObject', [$obj]);
-
-        $this->mymap->myfield->getValue()->shouldReturn('test value');
-    }
 }
