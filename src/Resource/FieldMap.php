@@ -2,8 +2,6 @@
 
 namespace TomPHP\HalClient\Resource;
 
-use stdClass;
-use TomPHP\HalClient\Resource\Node;
 use TomPHP\HalClient\Exception\FieldNotFoundException;
 
 final class FieldMap extends Node

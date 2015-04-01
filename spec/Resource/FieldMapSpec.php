@@ -3,8 +3,6 @@
 namespace spec\TomPHP\HalClient\Resource;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
-use stdClass;
 use TomPHP\HalClient\Resource\Field;
 use TomPHP\HalClient\Exception\FieldNotFoundException;
 use TomPHP\HalClient\Resource\Node;

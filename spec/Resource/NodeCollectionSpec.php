@@ -3,10 +3,8 @@
 namespace spec\TomPHP\HalClient\Resource;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use TomPHP\HalClient\Resource\Node;
 use TomPHP\HalClient\Exception\MutabilityException;
-use stdClass;
 use TomPHP\HalClient\Resource\NodeCollection;
 
 class NodeCollectionSpec extends ObjectBehavior

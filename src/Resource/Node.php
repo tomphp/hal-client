@@ -5,7 +5,7 @@ namespace TomPHP\HalClient\Resource;
 abstract class Node
 {
     /**
-     * @param array|scalar
+     * @param mixed
      *
      * @return boolean
      */

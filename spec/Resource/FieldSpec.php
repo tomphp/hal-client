@@ -3,7 +3,6 @@
 namespace spec\TomPHP\HalClient\Resource;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class FieldSpec extends ObjectBehavior
 {

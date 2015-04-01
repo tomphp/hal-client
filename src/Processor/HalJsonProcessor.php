@@ -9,10 +9,8 @@ use TomPHP\HalClient\Resource\Resource;
 use TomPHP\HalClient\ResourceFetcher;
 use TomPHP\HalClient\Resource\Field;
 use TomPHP\HalClient\Resource\FieldMap;
-use TomPHP\HalClient\Resource\FieldNodeFactory;
 use TomPHP\HalClient\Resource\Link;
 use TomPHP\HalClient\Resource\NodeCollection;
-use TomPHP\HalClient\Resource\ResourceCollection;
 use stdClass;
 use TomPHP\HalClient\Exception\ProcessingException;
 

@@ -6,9 +6,6 @@ use Assert\Assertion;
 use TomPHP\HalClient\Exception\FieldNotFoundException;
 use TomPHP\HalClient\Exception\LinkNotFoundException;
 use TomPHP\HalClient\Exception\ResourceNotFoundException;
-use TomPHP\HalClient\Resource\Field;
-use TomPHP\HalClient\Resource\Link;
-use TomPHP\HalClient\Resource\Node;
 
 final class Resource extends Node
 {

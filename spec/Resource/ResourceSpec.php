@@ -3,7 +3,6 @@
 namespace spec\TomPHP\HalClient\Resource;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use TomPHP\HalClient\Resource\Link;
 use TomPHP\HalClient\Exception\FieldNotFoundException;
 use TomPHP\HalClient\Exception\LinkNotFoundException;
@@ -23,7 +22,8 @@ class ResourceSpec extends ObjectBehavior
     /** @var Resource */
     private $resource;
 
-    function let(ResourceFetcher $fetcher) {
+    function let(ResourceFetcher $fetcher)
+    {
         $this->field    = new Field('value1');
         $this->link     = new Link($fetcher->getWrappedObject(), 'href');
         $this->resource = new Resource([]);

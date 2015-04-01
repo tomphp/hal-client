@@ -3,7 +3,6 @@
 namespace spec\TomPHP\HalClient\Processor;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use TomPHP\HalClient\Exception\FieldNotFoundException;
 use TomPHP\HalClient\ResourceFetcher;
 use Phly\Http\Response;

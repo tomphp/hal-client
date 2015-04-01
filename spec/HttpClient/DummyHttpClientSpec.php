@@ -3,7 +3,6 @@
 namespace spec\TomPHP\HalClient\HttpClient;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use TomPHP\HalClient\HttpClient\DummyHttpClient;
 
 class DummyHttpClientSpec extends ObjectBehavior
