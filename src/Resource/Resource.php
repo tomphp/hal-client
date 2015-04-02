@@ -99,4 +99,21 @@ final class Resource extends Node
 
         return $this->resources[$name];
     }
+
+    /** @todo test me! */
+    public function matches($criteria)
+    {
+        $result = true;
+
+        foreach ($criteria as $name => $value) {
+            if (!array_key_exists($name, $this->fields)) {
+                $result = false;
+                break;
+            }
+
+            $result = $result && $this->fields[$name]->matches($value);
+        }
+
+        return $result;
+    }
 }

@@ -87,4 +87,33 @@ class ResourceSpec extends ObjectBehavior
     {
         $this->resource1->shouldBeLike($this->resource);
     }
+
+    /*
+    function it_does_not_match_if_critera_includes_unknown_field()
+    {
+        $this->matches(['unknown_field' => 'some-value'])->shouldReturn(false);
+    }
+
+    function it_does_match_if_all_criteria_fields_match(Node $f1, Node $f2)
+    {
+        $f1->matches('search-value1')->willReturn(true);
+        $f2->matches('search-value2')->willReturn(true);
+
+        $this->matches([
+            'field1' => 'search-value1',
+            'field2' => 'search-value2'
+        ])->shouldReturn(true);
+    }
+
+    function it_does_not_match_if_any_criteria_fields_fail_to_match(Node $f1, Node $f2)
+    {
+        $f1->matches('search-value1')->willReturn(true);
+        $f2->matches('search-value2')->willReturn(false);
+
+        $this->matches([
+            'field1' => 'search-value1',
+            'field2' => 'search-value2'
+        ])->shouldReturn(false);
+    }
+     */
 }

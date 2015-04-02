@@ -8,20 +8,12 @@ A client library for navigating HAL APIs.
 Installation
 ------------
 
+**This library is currently in an early development stage. Many things are
+subject to change**
+
 ```
 $ composer require tomphp/hal-client
 ```
-
-### Stability 
-
-This library is currently in an early, experimental development phase. There
-are many missing features and the architecture may well change.  These
-architecture changes may change the types of objects being returned but will
-not make any changes to the public interface (although they might expand in)
-during version "0.1".
-
-Therefore, if you wish to use this, set the composer requirement to version
-"~0.1" and stick the using only the methods in the example below.
 
 Example
 -------
@@ -115,7 +107,6 @@ use TomPHP\HalClient\Client;
 $resource = Client::create();
 
 // Methods for resources
-
 $resource->then_name; // Access a field, link or embedded resource named 'the_name'
 
 $resource->getField('field_name'); // Specifically access field named 'field_name'
@@ -131,7 +122,6 @@ $link->get(); // Makes a get request to the link's href and returns the resource
 
 // Methods for collections
 $coll[5]; // Access element 5 in a collection
-
 $coll->findMatching(['age' => 20]); // Return a collection with all maps in the collection which a field called 'age' which is set to 20.
 ```
 
@@ -148,6 +138,7 @@ Planned Features
 * Raw JSON Processor
 * Raw XML Processor
 * Other HTTP methods for updating
+* CURIES
 
 Contributing
 ------------
