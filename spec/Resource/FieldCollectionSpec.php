@@ -3,9 +3,9 @@
 namespace spec\TomPHP\HalClient\Resource;
 
 use PhpSpec\ObjectBehavior;
-use TomPHP\HalClient\Resource\FieldNode;
 use TomPHP\HalClient\Exception\MutabilityException;
 use TomPHP\HalClient\Resource\FieldCollection;
+use TomPHP\HalClient\Resource\FieldNode;
 
 class FieldCollectionSpec extends ObjectBehavior
 {

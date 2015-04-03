@@ -3,8 +3,8 @@
 namespace spec\TomPHP\HalClient\Resource;
 
 use PhpSpec\ObjectBehavior;
-use TomPHP\HalClient\Resource\Field;
 use TomPHP\HalClient\Exception\FieldNotFoundException;
+use TomPHP\HalClient\Resource\Field;
 use TomPHP\HalClient\Resource\FieldNode;
 
 class FieldMapSpec extends ObjectBehavior
@@ -13,7 +13,7 @@ class FieldMapSpec extends ObjectBehavior
     {
         $this->beConstructedWith([
             'field1' => $f1,
-            'field2' => $f2
+            'field2' => $f2,
         ]);
     }
 
@@ -45,7 +45,7 @@ class FieldMapSpec extends ObjectBehavior
 
         $this->matches([
             'field1' => 'search-value1',
-            'field2' => 'search-value2'
+            'field2' => 'search-value2',
         ])->shouldReturn(true);
     }
 
@@ -56,7 +56,7 @@ class FieldMapSpec extends ObjectBehavior
 
         $this->matches([
             'field1' => 'search-value1',
-            'field2' => 'search-value2'
+            'field2' => 'search-value2',
         ])->shouldReturn(false);
     }
 }

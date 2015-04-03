@@ -5,7 +5,6 @@ namespace TomPHP\HalClient\Resource;
 use ArrayAccess;
 use Assert\Assertion;
 use Countable;
-use TomPHP\HalClient\Exception\MutabilityException;
 
 /**
  * @method ResourceNode function findMatching(array $criteria)

@@ -3,9 +3,9 @@
 namespace spec\TomPHP\HalClient\Resource;
 
 use PhpSpec\ObjectBehavior;
-use TomPHP\HalClient\Resource\ResourceNode;
 use TomPHP\HalClient\Exception\MutabilityException;
 use TomPHP\HalClient\Resource\ResourceCollection;
+use TomPHP\HalClient\Resource\ResourceNode;
 
 class ResourceCollectionSpec extends ObjectBehavior
 {

@@ -4,11 +4,11 @@ namespace spec\TomPHP\HalClient;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Psr\Http\Message\ResponseInterface;
 use TomPHP\HalClient\Exception\UnknownContentTypeException;
+use TomPHP\HalClient\HttpClient;
 use TomPHP\HalClient\Processor;
 use TomPHP\HalClient\Resource\Resource;
-use Psr\Http\Message\ResponseInterface;
-use TomPHP\HalClient\HttpClient;
 
 class ClientSpec extends ObjectBehavior
 {
@@ -17,9 +17,7 @@ class ClientSpec extends ObjectBehavior
         $processor->getContentType()->willReturn('application/hal+json');
         $processor->process(Argument::any())->willReturn();
 
-        $this->beConstructedWith($httpClient, [
-            $processor
-        ]);
+        $this->beConstructedWith($httpClient, [$processor]);
     }
 
     function it_throw_if_content_type_is_unknown(HttpClient $httpClient, ResponseInterface $response)

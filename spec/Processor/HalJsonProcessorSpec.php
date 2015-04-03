@@ -2,11 +2,11 @@
 
 namespace spec\TomPHP\HalClient\Processor;
 
+use Phly\Http\Response;
 use PhpSpec\ObjectBehavior;
 use TomPHP\HalClient\Exception\FieldNotFoundException;
-use TomPHP\HalClient\ResourceFetcher;
-use Phly\Http\Response;
 use TomPHP\HalClient\Exception\ProcessingException;
+use TomPHP\HalClient\ResourceFetcher;
 
 class HalJsonProcessorSpec extends ObjectBehavior
 {

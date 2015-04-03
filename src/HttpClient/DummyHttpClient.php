@@ -2,8 +2,8 @@
 
 namespace TomPHP\HalClient\HttpClient;
 
-use TomPHP\HalClient\HttpClient;
 use Phly\Http\Response;
+use TomPHP\HalClient\HttpClient;
 
 final class DummyHttpClient implements HttpClient
 {
@@ -11,7 +11,7 @@ final class DummyHttpClient implements HttpClient
 
     /** @var array */
     private $endpoints = [
-        self::METHOD_GET => []
+        self::METHOD_GET => [],
     ];
 
     /**

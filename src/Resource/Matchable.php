@@ -4,6 +4,6 @@ namespace TomPHP\HalClient\Resource;
 
 interface Matchable
 {
-    /** @return boolean */
+    /** @return bool */
     public function matches($criteria);
 }

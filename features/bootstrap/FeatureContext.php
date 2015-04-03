@@ -2,9 +2,7 @@
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
 use PHPUnit_Framework_Assert as Assert;
 use TomPHP\HalClient\Client;
 use TomPHP\HalClient\Exception\HalClientException;
@@ -54,7 +52,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
         }
 
         $this->client = new Client($this->httpClient, [
-            new HalJsonProcessor()
+            new HalJsonProcessor(),
         ]);
     }
 
@@ -72,7 +70,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
     public function iMakeAGetRequestTo($url)
     {
         try {
-            $this->response = $this->client->get($this->urlPrefix . $url);
+            $this->response = $this->client->get($this->urlPrefix.$url);
         } catch (HalClientException $error) {
             $this->error = $error;
         }

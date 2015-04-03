@@ -2,9 +2,9 @@
 
 namespace TomPHP\HalClient\HttpClient;
 
-use TomPHP\HalClient\HttpClient;
 use GuzzleHttp\Client;
 use Phly\Http\Response;
+use TomPHP\HalClient\HttpClient;
 
 final class GuzzleHttpClient implements HttpClient
 {
@@ -13,7 +13,7 @@ final class GuzzleHttpClient implements HttpClient
 
     public function __construct()
     {
-        $this->dbPath = __DIR__ . '/../../testapi/endpoints.db';
+        $this->dbPath = __DIR__.'/../../testapi/endpoints.db';
 
         $this->writeEndpoints([]);
     }
@@ -30,7 +30,7 @@ final class GuzzleHttpClient implements HttpClient
 
         $endpoints[$method][$url] = [
             'contentType' => $contentType,
-            'body'        => $body
+            'body'        => $body,
         ];
 
         $this->writeEndpoints($endpoints);
@@ -56,7 +56,7 @@ final class GuzzleHttpClient implements HttpClient
         $response = $client->get($url);
 
         return new Response(
-            'data://text/plain,' . (string) $response->getBody(),
+            'data://text/plain,'.(string) $response->getBody(),
             $response->getStatusCode(),
             $response->getHeaders()
         );

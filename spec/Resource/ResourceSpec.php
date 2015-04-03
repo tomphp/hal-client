@@ -3,13 +3,13 @@
 namespace spec\TomPHP\HalClient\Resource;
 
 use PhpSpec\ObjectBehavior;
-use TomPHP\HalClient\Resource\Link;
 use TomPHP\HalClient\Exception\FieldNotFoundException;
 use TomPHP\HalClient\Exception\LinkNotFoundException;
+use TomPHP\HalClient\Exception\ResourceNotFoundException;
 use TomPHP\HalClient\ResourceFetcher;
 use TomPHP\HalClient\Resource\Field;
+use TomPHP\HalClient\Resource\Link;
 use TomPHP\HalClient\Resource\Resource;
-use TomPHP\HalClient\Exception\ResourceNotFoundException;
 
 class ResourceSpec extends ObjectBehavior
 {
