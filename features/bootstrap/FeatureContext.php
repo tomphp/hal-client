@@ -83,7 +83,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
      */
     public function iMakeAGetRequestToLinkFromTheResponse($linkName)
     {
-        $this->response = $this->response->$linkName->get();
+        $this->response = $this->response->getLink($linkName)->get();
     }
 
     /**
@@ -102,22 +102,36 @@ class FeatureContext implements Context, SnippetAcceptingContext
         Assert::assertEquals($value, $this->response->$field->getValue());
     }
 
+    /**
+     * @Then the response field :fieldName in embedded resource :resourceName should contain :value
+     */
+    public function theResponseFieldInEmbeddedResourceShouldContain($resourceName, $fieldName, $value)
+    {
+        Assert::assertEquals($value, $this->response->getResource($resourceName)->$fieldName->getValue());
+    }
 
     /**
-     * @Then the response field :level2 in embedded resource :level1 should contain :value
      * @Then the field :level2 in response field :level1 should contain :value
      */
-    public function theResponseFieldInEmbeddedResourceShouldContain($level1, $level2, $value)
+    public function theResponseFieldInResponseFieldShouldContain($level1, $level2, $value)
     {
         Assert::assertEquals($value, $this->response->$level1->$level2->getValue());
     }
 
     /**
-     * @Then the field :level2 at index :index in response field :level1 should contain :value
+     * @Then the field :fieldName at index :index in response field :resourceName should contain :value
      */
-    public function theFieldAtIndexInResponseFieldShouldContain($level2, $level1, $value, $index)
+    public function theFieldAtIndexInResponseFieldShouldContain($fieldName, $resourceName, $value, $index)
     {
-        Assert::assertEquals($value, $this->response->{$level1}[$index]->$level2->getValue());
+        Assert::assertEquals($value, $this->response->{$resourceName}[$index]->$fieldName->getValue());
+    }
+
+    /**
+     * @Then the field :fieldName at index :index in resource field :resourceName should contain :value
+     */
+    public function theFieldAtIndexInResourceFieldShouldContain($fieldName, $resourceName, $value, $index)
+    {
+        Assert::assertEquals($value, $this->response->getResource($resourceName)[$index]->$fieldName->getValue());
     }
 
     /**

@@ -61,11 +61,6 @@ class ResourceSpec extends ObjectBehavior
         $this->getLink('link1')->shouldBeLike($this->link);
     }
 
-    function it_gets_link_by_magic_method()
-    {
-        $this->link1->shouldBeLike($this->link);
-    }
-
     function it_throws_when_requesting_an_unknown_link()
     {
         $this->shouldThrow(new LinkNotFoundException('unknown'))
@@ -81,11 +76,6 @@ class ResourceSpec extends ObjectBehavior
     {
         $this->shouldThrow(new ResourceNotFoundException('unknown'))
              ->duringGetResource('unknown');
-    }
-
-    function it_gets_resource_by_magic_method()
-    {
-        $this->resource1->shouldBeLike($this->resource);
     }
 
     /*

@@ -37,25 +37,17 @@ final class Resource implements ResourceNode
     /**
      * @param string $name
      *
-     * @return mixed
+     * @return FieldNode
      */
     public function __get($name)
     {
-        if (array_key_exists($name, $this->fields)) {
-            return $this->getField($name);
-        }
-
-        if (array_key_exists($name, $this->resources)) {
-            return $this->getResource($name);
-        }
-
-        return $this->getLink($name);
+        return $this->getField($name);
     }
 
     /**
      * @param string $name
      *
-     * @return mixed
+     * @return FieldNode
      *
      * @throws FieldNotFoundException
      */
