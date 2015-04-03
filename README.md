@@ -90,9 +90,9 @@ $recipes = Client::create()->get('http://api.demo-cocktails.com/recipes');
 
 echo "There are currently " . $recipes->count->getValue() . " cocktails" . PHP_EOL;
 
-$cocktail = $recipes[0]->self->get();
+$cocktail = $recipes[0]->getLink('self')->get();
 // or
-$cocktail = $recipes->findMatching(['name' => 'Mojito'])[0]->self->get();
+$cocktail = $recipes->findMatching(['name' => 'Mojito'])[0]->getLink('self')->get();
 
 echo $cocktail->name->getValue() . " has a " . $cocktail->rating->getValue() . " start rating." .PHP_EOL;
 ```
@@ -107,11 +107,11 @@ use TomPHP\HalClient\Client;
 $resource = Client::create();
 
 // Methods for resources
-$resource->then_name; // Access a field, link or embedded resource named 'the_name'
-
 $resource->getField('field_name'); // Specifically access field named 'field_name'
 $resource->getLink('link_name'); // Specifically access link named 'link_name'
 $resource->getResouce('resource_name'); // Specifically access resource named 'resource_name'
+
+$resource->field_name; // Alias for $resource->getField('field_name');
 
 // Methods for fields
 $field->getValue(); // Return the value contained in the field
