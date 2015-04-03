@@ -92,20 +92,71 @@ final class Resource implements ResourceNode
         return $this->resources[$name];
     }
 
-    /** @todo test me! */
     public function matches($criteria)
     {
-        $result = true;
-
         foreach ($criteria as $name => $value) {
-            if (!array_key_exists($name, $this->fields)) {
-                $result = false;
-                break;
+            if (!$this->matchesItem($name, $value)) {
+                return false;
             }
-
-            $result = $result && $this->fields[$name]->matches($value);
         }
 
-        return $result;
+        return true;
+    }
+
+    /**
+     * @param string|int $name
+     * @param mixed      $value
+     *
+     * @return bool
+     */
+    private function matchesItem($name, $value)
+    {
+        if ($this->isResourceSearchCriteria($name, $value)) {
+            return $this->matchesResource($value);
+        }
+
+        return $this->matchField($name, $value);
+    }
+
+    /**
+     * @param string|int $name
+     * @param mixed      $value
+     *
+     * @return bool
+     */
+    private function isResourceSearchCriteria($name, $value)
+    {
+        return is_int($name)
+            && is_array($value)
+            && array_key_exists(0, $value)
+            && $value[0] === 'resource';
+    }
+
+    /** @return bool */
+    private function matchesResource(array $value)
+    {
+        $name = $value[1];
+        $search = $value[2];
+
+        if (!array_key_exists($name, $this->resources)) {
+            return false;
+        }
+
+        return $this->resources[$name]->matches($search);
+    }
+
+    /**
+     * @param string $name
+     * @param mixed  $value
+     *
+     * @return bool
+     */
+    public function matchField($name, $value)
+    {
+        if (!array_key_exists($name, $this->fields)) {
+            return false;
+        }
+
+        return $this->fields[$name]->matches($value);
     }
 }
