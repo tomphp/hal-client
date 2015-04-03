@@ -7,14 +7,14 @@ use Assert\Assertion;
 use Countable;
 use TomPHP\HalClient\Exception\MutabilityException;
 
-final class NodeCollection extends Node implements ArrayAccess, Countable
+final class FieldCollection implements FieldNode, ArrayAccess, Countable
 {
-    /** @var Node[] */
+    /** @var FieldNode[] */
     private $nodes;
 
     public function __construct(array $nodes)
     {
-        Assertion::allIsInstanceOf($nodes, Node::class);
+        Assertion::allIsInstanceOf($nodes, FieldNode::class);
 
         $this->nodes = $nodes;
     }
@@ -28,7 +28,7 @@ final class NodeCollection extends Node implements ArrayAccess, Countable
     {
         return new self(array_values(array_filter(
             $this->nodes,
-            function (Node $node) use ($criteria) {
+            function (FieldNode $node) use ($criteria) {
                 return $node->matches($criteria);
             }
         )));
@@ -63,5 +63,10 @@ final class NodeCollection extends Node implements ArrayAccess, Countable
     public function count()
     {
         return count($this->nodes);
+    }
+
+    public function matches($criteria)
+    {
+        return false;
     }
 }

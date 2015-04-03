@@ -4,15 +4,16 @@ namespace TomPHP\HalClient\Processor;
 
 use Phly\Http\Stream;
 use Psr\Http\Message\ResponseInterface;
+use TomPHP\HalClient\Exception\ProcessingException;
 use TomPHP\HalClient\Processor;
-use TomPHP\HalClient\Resource\Resource;
 use TomPHP\HalClient\ResourceFetcher;
 use TomPHP\HalClient\Resource\Field;
+use TomPHP\HalClient\Resource\FieldCollection;
 use TomPHP\HalClient\Resource\FieldMap;
 use TomPHP\HalClient\Resource\Link;
-use TomPHP\HalClient\Resource\NodeCollection;
+use TomPHP\HalClient\Resource\Resource;
+use TomPHP\HalClient\Resource\ResourceCollection;
 use stdClass;
-use TomPHP\HalClient\Exception\ProcessingException;
 
 final class HalJsonProcessor implements Processor
 {
@@ -95,7 +96,7 @@ final class HalJsonProcessor implements Processor
 
         foreach ($this->data->_embedded as $name => $params) {
             if (is_array($params)) {
-                $resources[$name] = new NodeCollection(array_map(
+                $resources[$name] = new ResourceCollection(array_map(
                     function ($params) {
                         return $this->createResourceFromObject($params);
                     },
@@ -160,11 +161,11 @@ final class HalJsonProcessor implements Processor
     /**
      * @param mixed[] $values
      *
-     * @return NodeCollection
+     * @return FieldCollection
      */
     public function fromArray(array $values)
     {
-        return new NodeCollection(array_map(function ($field) {
+        return new FieldCollection(array_map(function ($field) {
             return $this->createFieldNode($field);
         }, $values));
     }

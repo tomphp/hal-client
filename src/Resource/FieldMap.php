@@ -4,7 +4,7 @@ namespace TomPHP\HalClient\Resource;
 
 use TomPHP\HalClient\Exception\FieldNotFoundException;
 
-final class FieldMap extends Node
+final class FieldMap implements FieldNode
 {
     /** @var Node[] */
     private $fields;
