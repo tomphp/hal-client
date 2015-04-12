@@ -4,7 +4,6 @@ namespace spec\TomPHP\HalClient\Resource;
 
 use PhpSpec\ObjectBehavior;
 use TomPHP\HalClient\Exception\FieldNotFoundException;
-use TomPHP\HalClient\Resource\Field;
 use TomPHP\HalClient\Resource\FieldNode;
 
 class FieldMapSpec extends ObjectBehavior
