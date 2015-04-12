@@ -20,13 +20,13 @@ class ResourceCollectionSpec extends ObjectBehavior
         $this[1]->shouldBe($f2);
     }
 
-    function it_is_accessible_can_be_checked_if_index_exists(ResourceNode $f1, ResourceNode $f2)
+    function it_is_accessible_can_be_checked_if_index_exists()
     {
         $this->offsetExists(0)->shouldReturn(true);
         $this->offsetExists(2)->shouldReturn(false);
     }
 
-    function it_is_immutable(ResourceNode $f1, ResourceNode $f2)
+    function it_is_immutable()
     {
         $this->shouldThrow(new MutabilityException())->duringOffsetSet(0, 'value');
         $this->shouldThrow(new MutabilityException())->duringOffsetUnset(0);

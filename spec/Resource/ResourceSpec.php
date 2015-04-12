@@ -100,7 +100,7 @@ class ResourceSpec extends ObjectBehavior
         ])->shouldReturn(false);
     }
 
-    function it_does_not_match_unknown_resource(FieldNode $f1, ResourceNode $resource)
+    function it_does_not_match_unknown_resource()
     {
         $this->matches([
             'field1' => 'search-value1',

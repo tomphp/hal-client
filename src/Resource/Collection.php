@@ -34,11 +34,17 @@ trait Collection
         )));
     }
 
+    /**
+     * @return bool
+     */
     public function offsetExists($offset)
     {
         return isset($this->items[$offset]);
     }
 
+    /**
+     * @return Matchable
+     */
     public function offsetGet($offset)
     {
         return $this->items[$offset];

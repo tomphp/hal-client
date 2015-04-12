@@ -13,7 +13,7 @@ class DummyHttpClientSpec extends ObjectBehavior
             DummyHttpClient::METHOD_GET,
             'http://api.test.com/',
             'application/hal+xml',
-           '{"name":"value"}'
+            '{"name":"value"}'
         );
 
         $response = $this->get('http://api.test.com/');

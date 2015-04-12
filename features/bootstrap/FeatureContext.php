@@ -7,6 +7,7 @@ use PHPUnit_Framework_Assert as Assert;
 use TomPHP\HalClient\Client;
 use TomPHP\HalClient\Exception\HalClientException;
 use TomPHP\HalClient\Exception\UnknownContentTypeException;
+use TomPHP\HalClient\HttpClient;
 use TomPHP\HalClient\HttpClient\DummyHttpClient;
 use TomPHP\HalClient\HttpClient\GuzzleHttpClient;
 use TomPHP\HalClient\Processor\HalJsonProcessor;
@@ -17,7 +18,7 @@ use TomPHP\HalClient\Resource\Node;
  */
 class FeatureContext implements Context, SnippetAcceptingContext
 {
-    /** @var DummyHttpClient */
+    /** @var HttpClient */
     private $httpClient;
 
     /** @var Client */
@@ -46,7 +47,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
     {
         if ($client === 'guzzle') {
             $this->httpClient = new GuzzleHttpClient();
-            $this->urlPrefix = 'http://localhost:1080';
+            $this->urlPrefix  = 'http://localhost:1080';
         } else {
             $this->httpClient = new DummyHttpClient();
         }

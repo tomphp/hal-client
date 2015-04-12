@@ -2,6 +2,8 @@ HalClient
 =========
 
 [![Build Status](https://api.travis-ci.org/tomphp/hal-client.svg)](https://travis-ci.org/tomphp/hal-client)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/tomphp/hal-client/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/tomphp/hal-client/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/tomphp/hal-client/badges/build.png?b=master)](https://scrutinizer-ci.com/g/tomphp/hal-client/build-status/master)
 
 A client library for navigating HAL APIs.
 
