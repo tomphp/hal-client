@@ -32,12 +32,19 @@ checks:
         avoid_multiple_statements_on_same_line: true
         avoid_fixme_comments: true
         align_assignments: true
+        verify_argument_usable_as_reference: true
+        simplify_boolean_return: true
+        prefer_while_loop_over_for_loop: true
+        foreach_traversable: false
+        avoid_unnecessary_concatenation: true
 
 coding_style:
     php:
         spaces:
+            before_parentheses:
+                closure_definition: true
             around_operators:
-                concatenation: false
+                concatenation: true
             ternary_operator:
                 in_short_version: true
         braces:
@@ -62,3 +69,4 @@ coding_style:
                 general: lower
             constants:
                 true_false_null: lower
+
