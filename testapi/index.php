@@ -3,7 +3,8 @@
 $endpointsDb = __DIR__ . '/endpoints.db';
 
 /** @return array */
-function getEndpoints() {
+function getEndpoints()
+{
     global $endpointsDb;
 
     $endpoints = [];

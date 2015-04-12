@@ -20,7 +20,7 @@ final class HalJsonProcessor implements Processor
     /** @var ResponseInterface */
     private $response;
 
-    /** @var array */
+    /** @var mixed */
     private $data;
 
     /** @var ResourceFetcher */
@@ -77,8 +77,8 @@ final class HalJsonProcessor implements Processor
         foreach ($this->data->_links as $name => $params) {
             $links[$name] = new Link(
                 $this->fetcher,
-                $params->href,
-                isset($params->rel) ? $params->rel : null
+                $params->href
+                //isset($params->rel) ? $params->rel : null
             );
         }
 
@@ -122,7 +122,11 @@ final class HalJsonProcessor implements Processor
         );
     }
 
-    /** @return Stream */
+    /**
+     * @param string $data
+     *
+     * @return Stream
+     */
     private function createStream($data)
     {
         return new Stream("data://text/plain,$data");
@@ -131,7 +135,7 @@ final class HalJsonProcessor implements Processor
     /**
      * @param mixed $value
      *
-     * @return FileNode
+     * @return FieldMap|FieldCollection|Field
      */
     private function createFieldNode($value)
     {
