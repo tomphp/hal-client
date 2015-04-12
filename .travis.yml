@@ -13,9 +13,7 @@ before_script:
   - sleep 3
 
 script:
-  - vendor/bin/phpcs --standard=psr2 src
-  - vendor/bin/phpspec r
-  - vendor/bin/behat
+  - composer test
 
 branches:
   only:
