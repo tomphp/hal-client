@@ -16,6 +16,12 @@ suite you need to first install the dependencies using composer:
 $ composer install
 ```
 
+Before running tests you need to start the test API, this is done with:
+
+```
+$ composer serve
+```
+
 Then the tests can be run using the following command:
 
 ```
