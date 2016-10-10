@@ -37,7 +37,8 @@ final class Client implements ResourceFetcher
     {
         $response = $this->httpClient->get($url);
 
-        $contentType = $response->getHeader('content-type');
+        $contentTypes = $response->getHeader('content-type');
+        $contentType = array_shift($contentTypes);
 
         if (!array_key_exists($contentType, $this->processors)) {
             throw new UnknownContentTypeException($contentType);

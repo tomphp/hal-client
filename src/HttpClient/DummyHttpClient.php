@@ -2,8 +2,8 @@
 
 namespace TomPHP\HalClient\HttpClient;
 
-use Phly\Http\Response;
 use TomPHP\HalClient\HttpClient;
+use Zend\Diactoros\Response;
 
 final class DummyHttpClient implements HttpClient
 {

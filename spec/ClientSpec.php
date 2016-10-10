@@ -20,9 +20,9 @@ class ClientSpec extends ObjectBehavior
         $this->beConstructedWith($httpClient, [$processor]);
     }
 
-    function it_throw_if_content_type_is_unknown(HttpClient $httpClient, ResponseInterface $response)
+    function it_throws_if_content_type_is_unknown(HttpClient $httpClient, ResponseInterface $response)
     {
-        $response->getHeader('content-type')->willReturn('application/unknown-type');
+        $response->getHeader('content-type')->willReturn(['application/unknown-type']);
         $httpClient->get('http://api.test.com/')->willReturn($response);
 
         $this->shouldThrow(
@@ -32,7 +32,7 @@ class ClientSpec extends ObjectBehavior
 
     function it_returns_a_processed_resource(ResponseInterface $response, HttpClient $httpClient, Processor $processor)
     {
-        $response->getHeader('content-type')->willReturn('application/hal+json');
+        $response->getHeader('content-type')->willReturn(['application/hal+json']);
         $resource = new Resource([], []);
 
         $httpClient->get('http://api.test.com/')->willReturn($response);

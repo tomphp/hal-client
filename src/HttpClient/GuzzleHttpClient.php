@@ -3,8 +3,8 @@
 namespace TomPHP\HalClient\HttpClient;
 
 use GuzzleHttp\Client;
-use Phly\Http\Response;
 use TomPHP\HalClient\HttpClient;
+use Zend\Diactoros\Response;
 
 final class GuzzleHttpClient implements HttpClient
 {

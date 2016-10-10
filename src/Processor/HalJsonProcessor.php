@@ -2,7 +2,6 @@
 
 namespace TomPHP\HalClient\Processor;
 
-use Phly\Http\Stream;
 use Psr\Http\Message\ResponseInterface;
 use TomPHP\HalClient\Exception\ProcessingException;
 use TomPHP\HalClient\Processor;
@@ -14,6 +13,7 @@ use TomPHP\HalClient\Resource\Link;
 use TomPHP\HalClient\Resource\Resource;
 use TomPHP\HalClient\Resource\ResourceCollection;
 use stdClass;
+use Zend\Diactoros\Stream;
 
 final class HalJsonProcessor implements Processor
 {
